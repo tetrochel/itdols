@@ -16,7 +16,7 @@ class _MainPageState extends State<MainPage> {
   var pages = {
     0: Container(), // TODO
     1: const JobsPage(),
-    2: const PlacesPage(),
+    2: PlacesPage(),
     3: const RoutePage(),
   };
 

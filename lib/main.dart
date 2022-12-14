@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:itdols/core/widgets/main_page.dart';
 
@@ -19,7 +20,9 @@ class MyApp extends StatelessWidget {
           Theme.of(context).textTheme,
         ),
       ),
-      home: const MainPage(),
+      home: const ProviderScope(
+        child: MainPage(),
+      ),
     );
   }
 }
