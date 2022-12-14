@@ -16,10 +16,10 @@ class RoutesController {
   });
 
   // TODO: contacting the API
-  Future getPlaces() async {
-    List<RouteModel> places = [];
+  Future getRoutes() async {
+    List<RouteModel> routes = [];
     await Future.delayed(const Duration(seconds: 1));
-    places = [
+    routes = [
       RouteModel(
         firstPlace: PlaceModel('Дом', '9b62e665-d042-4bd6-a3bd-47ad31ea0b36'),
         secondPlace: PlaceModel('Работа', '7725233e-1db2-4c80-9db2-db9415fb777a'),
@@ -31,6 +31,11 @@ class RoutesController {
         duration: 80,
       ),
     ];
-    routesStateHolder.setAll(places);
+    routesStateHolder.setAll(routes);
+  }
+
+  // TODO: contacting the API
+  Future addRoute(RouteModel route) async {
+    print(route);
   }
 }

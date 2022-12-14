@@ -14,7 +14,7 @@ class RoutePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     routes = ref.watch(routesStateHolder);
-    ref.read(routesController).getPlaces();
+    ref.read(routesController).getRoutes();
     return Column(
       children: [
         const HeaderWidget(
