@@ -41,6 +41,7 @@ class MainPage extends ConsumerWidget {
         body: Row(
           children: [
             NavigationRail(
+              backgroundColor: Colors.white,
               labelType: NavigationRailLabelType.all,
               selectedIndex: _curentPage,
               onDestinationSelected: (value) {

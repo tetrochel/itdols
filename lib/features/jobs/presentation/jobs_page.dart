@@ -6,18 +6,25 @@ import 'package:itdols/features/jobs/domain/models/job_model.dart';
 import 'package:itdols/features/jobs/domain/states/jobs_state.dart';
 import 'package:itdols/features/jobs/jobs_controller.dart';
 import 'package:itdols/features/jobs/presentation/job_widget.dart';
+import 'package:itdols/features/places/domain/models/place_model.dart';
+import 'package:itdols/features/places/domain/states/places_state.dart';
 
 class JobsPage extends ConsumerWidget {
   JobsPage({super.key});
 
   List<JobModel>? jobs;
+  List<PlaceModel>? places;
   WidgetState? widgetState;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     jobs = ref.watch(jobsStateHolder);
+    places = ref.watch(placesStateHolder);
     if (jobs == null) {
       ref.read(jobsController).getJobs();
+    }
+    if (places == null) {
+      ref.read(jobsController).getPlaces();
     }
     widgetState = ref.watch(widgetStateHolder);
     return Column(
@@ -38,7 +45,7 @@ class JobsPage extends ConsumerWidget {
             child: ListView.separated(
               physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
               itemCount: jobs!.length,
-              itemBuilder: (BuildContext context, int index) => JobWidget(job: jobs![index]),
+              itemBuilder: (BuildContext context, int index) => JobWidget(job: jobs![index], places: places!,),
               separatorBuilder: (BuildContext context, int index) => const Divider(
                 color: Colors.grey,
                 height: 1,

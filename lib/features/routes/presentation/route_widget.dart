@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:itdols/core/widgets/place_color_circle.dart';
 import 'package:itdols/features/places/domain/models/place_model.dart';
 import 'package:itdols/features/routes/domain/models/route_model.dart';
 import 'package:itdols/features/routes/routes_controller.dart';
@@ -50,19 +51,13 @@ class RouteWidgetState extends ConsumerState<RouteWidget> {
                               height: 30,
                               child: TextFormField(
                                 key: _formKey,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter some text';
-                                  }
-                                  return null;
-                                },
-                                onFieldSubmitted: (value) => confirm(),
+                                onFieldSubmitted: (value) => finishEditing(),
                                 style: const TextStyle(fontSize: 16),
                                 controller: controller,
                                 focusNode: focusNode,
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 5),
                                 ),
                               ),
                             ),
@@ -83,34 +78,51 @@ class RouteWidgetState extends ConsumerState<RouteWidget> {
           ),
           const Spacer(),
           isEditing
-              ? ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    foregroundColor: Colors.white,
-                  ),
-                  onPressed: confirm,
-                  child: const Text(
-                    'Сохранить',
-                  ),
+              ? Row(
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        foregroundColor: Colors.white,
+                      ),
+                      onPressed: finishEditing,
+                      child: const Text(
+                        'Сохранить',
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    IconButton(
+                      onPressed: () => setState(() {
+                        isEditing = false;
+                      }),
+                      icon: const Icon(Icons.close),
+                      style: IconButton.styleFrom(
+                        backgroundColor: Colors.orange,
+                        foregroundColor: Colors.white,
+                      ),
+                    ),
+                  ],
                 )
               : TextButton(
-                  onPressed: () {
-                    setState(() {
-                      isEditing = true;
-                    });
-                    focusNode.requestFocus();
-                    controller.text = widget.route.duration.toString();
-                  },
+                  onPressed: startEditing,
                   child: const Text(
                     'Изменить',
                   ),
-                )
+                ),
         ],
       ),
     );
   }
 
-  void confirm() async {
+  void startEditing() {
+    setState(() {
+      isEditing = true;
+    });
+    focusNode.requestFocus();
+    controller.text = widget.route.duration.toString();
+  }
+
+  void finishEditing() async {
     final int? value = int.tryParse(controller.text);
     if (value == null) {
       return;
@@ -139,15 +151,7 @@ class _PlaceWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          height: 20,
-          width: 20,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey),
-            color: Color(0xAA000000 + int.parse(place.id.substring(2, 8), radix: 16)),
-            shape: BoxShape.circle,
-          ),
-        ),
+        PlaceColorCircle(size: 20, id: place.id),
         const SizedBox(
           width: 4,
         ),
