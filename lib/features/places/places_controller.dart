@@ -14,9 +14,10 @@ class PlacesController {
     required this.placesStateHolder,
   });
 
+  // TODO: contacting the API
   Future getPlaces() async {
     List<PlaceModel> places = [];
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(microseconds: 1));
     places = [
       PlaceModel('Дом', '9b62e665-d042-4bd6-a3bd-47ad31ea0b36'),
       PlaceModel('Работа', '7725233e-1db2-4c80-9db2-db9415fb777a'),

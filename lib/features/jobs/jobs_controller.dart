@@ -15,9 +15,10 @@ class JobsController {
     required this.jobsStateHolder,
   });
 
+  // TODO: contacting the API
   Future getJobs() async {
     List<JobModel> jobs = [];
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(microseconds: 1));
     jobs = [
       JobModel(
         'Вещи постирать',

@@ -38,7 +38,7 @@ class RouteWidget extends StatelessWidget {
           const Spacer(),
           TextButton(
             onPressed: () {
-              // TODO
+              // TODO: go to route change screen
             },
             child: const Text(
               'Изменить',

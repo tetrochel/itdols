@@ -24,7 +24,7 @@ class JobsPage extends ConsumerWidget {
           actions: [
             ElevatedButton(
               onPressed: () {
-                // TODO
+                // TODO: go to job create screen
               },
               child: const Text('Добавить'),
             )

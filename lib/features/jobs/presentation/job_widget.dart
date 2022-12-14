@@ -48,7 +48,7 @@ class JobWidget extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              // TODO
+              // TODO: go to job change screen
             },
             child: const Text(
               'Изменить',

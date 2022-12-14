@@ -31,7 +31,7 @@ class PlaceWidget extends StatelessWidget {
           const Spacer(),
           TextButton(
             onPressed: () {
-              // TODO
+              // TODO: go to place chane screen
             },
             child: const Text(
               'Изменить',

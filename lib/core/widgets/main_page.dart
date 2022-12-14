@@ -14,10 +14,10 @@ class _MainPageState extends State<MainPage> {
   int _curentPage = 0;
 
   var pages = {
-    0: Container(), // TODO
+    0: Container(), // TODO: swap to calculation screen
     1: JobsPage(),
     2: PlacesPage(),
-    3: const RoutePage(),
+    3: RoutePage(),
   };
 
   var icons = {
