@@ -28,4 +28,9 @@ class PlacesController {
     ];
     placesStateHolder.setAll(places);
   }
+
+  // TODO: contacting the API
+  Future addPlace(PlaceModel place) async {
+    print(place);
+  }
 }
