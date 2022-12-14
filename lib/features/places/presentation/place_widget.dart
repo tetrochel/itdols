@@ -92,7 +92,7 @@ class PlaceWidgetState extends ConsumerState<PlaceWidget> {
       isEditing = false;
     });
     focusNode.unfocus();
-    await ref.read(placesController).addPlace(widget.place.copyWith(name: controller.text));
+    await ref.read(placesController).setPlace(widget.place.copyWith(name: controller.text));
     await ref.read(placesController).getPlaces();
   }
 }

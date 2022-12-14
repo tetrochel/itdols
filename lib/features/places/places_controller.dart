@@ -1,21 +1,32 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:itdols/core/states/widget_state.dart';
 import 'package:itdols/features/places/domain/models/place_model.dart';
 import 'package:itdols/features/places/domain/states/places_state.dart';
+
+StateNotifierProvider<WidgetStateHolder, WidgetState> widgetStateHolder =
+    StateNotifierProvider<WidgetStateHolder, WidgetState>(
+  (ref) => WidgetStateHolder(WidgetState.loading),
+);
 
 Provider<PlacesController> placesController = Provider<PlacesController>(
   (ref) => PlacesController(
     placesStateHolder: ref.watch(placesStateHolder.notifier),
+    widgetStateHolder: ref.watch(widgetStateHolder.notifier),
   ),
 );
 
 class PlacesController {
   final PlacesStateHolder placesStateHolder;
+  final WidgetStateHolder widgetStateHolder;
   PlacesController({
     required this.placesStateHolder,
+    required this.widgetStateHolder,
   });
 
   // TODO: contacting the API
   Future getPlaces() async {
+    widgetStateHolder.setWidgetState(WidgetState.loading);
+
     List<PlaceModel> places = [];
     await Future.delayed(const Duration(microseconds: 1));
     places = [
@@ -26,11 +37,13 @@ class PlacesController {
       PlaceModel('Редакция', '1dca6467-92ae-4d65-b44a-353b5918930a'),
       PlaceModel('Кафе', '36b8a6da-fc33-4e0a-a64c-e9e41dfaf2e5'),
     ];
+
     placesStateHolder.setAll(places);
+    widgetStateHolder.setWidgetState(WidgetState.loaded);
   }
 
   // TODO: contacting the API
-  Future addPlace(PlaceModel place) async {
+  Future setPlace(PlaceModel place) async {
     print(place);
   }
 }

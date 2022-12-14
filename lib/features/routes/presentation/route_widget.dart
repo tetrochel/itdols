@@ -122,7 +122,7 @@ class RouteWidgetState extends ConsumerState<RouteWidget> {
       isEditing = false;
     });
     focusNode.unfocus();
-    await ref.read(routesController).addRoute(widget.route.copyWith(duration: value));
+    await ref.read(routesController).setRoute(widget.route.copyWith(duration: value));
     await ref.read(routesController).getRoutes();
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:itdols/core/states/widget_state.dart';
 import 'package:itdols/core/widgets/header_widget.dart';
 import 'package:itdols/features/places/domain/models/place_model.dart';
 import 'package:itdols/features/places/domain/states/places_state.dart';
@@ -8,12 +9,17 @@ import 'package:itdols/features/places/places_controller.dart';
 
 class PlacesPage extends ConsumerWidget {
   PlacesPage({super.key});
+
   List<PlaceModel>? places;
+  WidgetState? widgetState;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     places = ref.watch(placesStateHolder);
-    ref.read(placesController).getPlaces();
+    if (places == null) {
+      ref.read(placesController).getPlaces();
+    }
+    widgetState = ref.watch(widgetStateHolder);
     return Column(
       children: [
         HeaderWidget(
@@ -27,7 +33,7 @@ class PlacesPage extends ConsumerWidget {
             )
           ],
         ),
-        if (places != null)
+        if (widgetState == WidgetState.loaded)
           Expanded(
             child: ListView.separated(
               physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
@@ -42,8 +48,12 @@ class PlacesPage extends ConsumerWidget {
               ),
             ),
           )
+        else if (widgetState == WidgetState.error)
+          Container(
+              // TODO: create error screen
+              )
         else
-          const Expanded(child: Center(child: CircularProgressIndicator())),
+          const Expanded(child: Center(child: CircularProgressIndicator()))
       ],
     );
   }

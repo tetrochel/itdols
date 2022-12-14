@@ -1,22 +1,33 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:itdols/core/states/widget_state.dart';
 import 'package:itdols/features/jobs/domain/models/job_model.dart';
 import 'package:itdols/features/jobs/domain/states/jobs_state.dart';
 import 'package:itdols/features/places/domain/models/place_model.dart';
 
+StateNotifierProvider<WidgetStateHolder, WidgetState> widgetStateHolder =
+    StateNotifierProvider<WidgetStateHolder, WidgetState>(
+  (ref) => WidgetStateHolder(WidgetState.loading),
+);
+
 Provider<JobsController> jobsController = Provider<JobsController>(
   (ref) => JobsController(
     jobsStateHolder: ref.watch(jobsStateHolder.notifier),
+    widgetStateHolder: ref.watch(widgetStateHolder.notifier),
   ),
 );
 
 class JobsController {
   final JobsStateHolder jobsStateHolder;
+  final WidgetStateHolder widgetStateHolder;
   JobsController({
     required this.jobsStateHolder,
+    required this.widgetStateHolder,
   });
 
   // TODO: contacting the API
   Future getJobs() async {
+    widgetStateHolder.setWidgetState(WidgetState.loading);
+
     List<JobModel> jobs = [];
     await Future.delayed(const Duration(microseconds: 1));
     jobs = [
@@ -45,6 +56,8 @@ class JobsController {
         120,
       ),
     ];
+
     jobsStateHolder.setAll(jobs);
+    widgetStateHolder.setWidgetState(WidgetState.loaded);
   }
 }

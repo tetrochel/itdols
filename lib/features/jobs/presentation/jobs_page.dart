@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:itdols/core/states/widget_state.dart';
 import 'package:itdols/core/widgets/header_widget.dart';
 import 'package:itdols/features/jobs/domain/models/job_model.dart';
 import 'package:itdols/features/jobs/domain/states/jobs_state.dart';
@@ -10,11 +11,15 @@ class JobsPage extends ConsumerWidget {
   JobsPage({super.key});
 
   List<JobModel>? jobs;
+  WidgetState? widgetState;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     jobs = ref.watch(jobsStateHolder);
-    ref.read(jobsController).getJobs();
+    if (jobs == null) {
+      ref.read(jobsController).getJobs();
+    }
+    widgetState = ref.watch(widgetStateHolder);
     return Column(
       children: [
         HeaderWidget(
@@ -28,7 +33,7 @@ class JobsPage extends ConsumerWidget {
             )
           ],
         ),
-        if (jobs != null)
+        if (widgetState == WidgetState.loaded)
           Expanded(
             child: ListView.separated(
               physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
@@ -43,8 +48,12 @@ class JobsPage extends ConsumerWidget {
               ),
             ),
           )
+        else if (widgetState == WidgetState.error)
+          Container(
+              // TODO: create error screen
+              )
         else
-          const Expanded(child: Center(child: CircularProgressIndicator())),
+          const Expanded(child: Center(child: CircularProgressIndicator()))
       ],
     );
   }

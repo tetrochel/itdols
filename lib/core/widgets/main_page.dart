@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itdols/core/states/screen_state.dart';
+import 'package:itdols/features/jobs/jobs_controller.dart';
 import 'package:itdols/features/jobs/presentation/jobs_page.dart';
+import 'package:itdols/features/places/places_controller.dart';
 import 'package:itdols/features/places/presentation/places_page.dart';
 import 'package:itdols/features/routes/presentation/routes_page.dart';
+import 'package:itdols/features/routes/routes_controller.dart';
 
 class MainPage extends ConsumerWidget {
   MainPage({super.key});
@@ -27,6 +30,12 @@ class MainPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _curentPage = ref.watch(screenStateHolder);
+    var commands = {
+      0: ref.read(routesController).getRoutes,
+      1: ref.read(jobsController).getJobs,
+      2: ref.read(placesController).getPlaces,
+      3: ref.read(routesController).getRoutes,
+    };
     return SafeArea(
       child: Scaffold(
         body: Row(
@@ -34,7 +43,10 @@ class MainPage extends ConsumerWidget {
             NavigationRail(
               labelType: NavigationRailLabelType.all,
               selectedIndex: _curentPage,
-              onDestinationSelected: (value) => ref.read(screenStateHolder.notifier).setScreen(value),
+              onDestinationSelected: (value) {
+                ref.read(screenStateHolder.notifier).setScreen(value);
+                commands[_curentPage]!();
+              },
               destinations: List.generate(
                 icons.length,
                 (index) => NavigationRailDestination(
