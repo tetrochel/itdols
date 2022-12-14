@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:itdols/features/jobs/presentation/jobs_page.dart';
 import 'package:itdols/features/places/presentation/places_page.dart';
+import 'package:itdols/features/routes/presentation/routes_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -16,7 +17,7 @@ class _MainPageState extends State<MainPage> {
     0: Container(), // TODO
     1: const JobsPage(),
     2: const PlacesPage(),
-    3: Container(), // TODO
+    3: const RoutePage(),
   };
 
   var icons = {

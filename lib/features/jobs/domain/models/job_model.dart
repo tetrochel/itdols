@@ -10,9 +10,14 @@ class JobModel {
   String getTimeString() {
     String result = '';
     if (duration >= 60) {
-      result = '$resultчасов: ${duration ~/ 60}, ';
+      result = '$resultчасов: ${duration ~/ 60}';
     }
-    result = '$resultминут: ${duration % 60}';
+    if (duration % 60 != 0) {
+      if (result != '') {
+        result = '$result, ';
+      }
+      result = '$resultминут: ${duration % 60}';
+    }
     return result;
   }
 
