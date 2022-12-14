@@ -13,9 +13,7 @@ class PlacesPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     places = ref.watch(placesStateHolder);
-    if (places == null) {
-      ref.read(placesController).getPlaces();
-    }
+    ref.read(placesController).getPlaces();
     return Column(
       children: [
         HeaderWidget(

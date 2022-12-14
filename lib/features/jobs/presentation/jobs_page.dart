@@ -14,9 +14,7 @@ class JobsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     jobs = ref.watch(jobsStateHolder);
-    if (jobs == null) {
-      ref.read(jobsController).getJobs();
-    }
+    ref.read(jobsController).getJobs();
     return Column(
       children: [
         HeaderWidget(

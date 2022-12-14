@@ -15,13 +15,13 @@ class RouteModel {
   String getTimeString() {
     String result = '';
     if (duration >= 60) {
-      result = '$result${duration ~/ 60} часов';
+      result = '$result${duration ~/ 60} ч';
     }
     if (duration % 60 != 0) {
       if (result != '') {
         result = '$result, ';
       }
-      result = '$result${duration % 60} минут';
+      result = '$result${duration % 60} мин';
     }
     return result;
   }

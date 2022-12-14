@@ -19,16 +19,16 @@ class RouteWidget extends StatelessWidget {
               _PlaceWidget(place: route.firstPlace),
               Row(
                 children: [
-                  const SizedBox(width: 11),
+                  const SizedBox(width: 9),
                   Container(
-                    height: 40,
+                    height: 36,
                     width: 2,
                     color: Colors.grey,
                   ),
-                  const SizedBox(width: 15),
+                  const SizedBox(width: 21),
                   Text(
                     'Время в пути: ${route.getTimeString()}',
-                    style: const TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 16),
                   ),
                 ],
               ),
@@ -63,8 +63,8 @@ class _PlaceWidget extends StatelessWidget {
     return Row(
       children: [
         Container(
-          height: 24,
-          width: 24,
+          height: 20,
+          width: 20,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey),
             color: Color(0xAA000000 + int.parse(place.id.substring(2, 8), radix: 16)),
@@ -76,7 +76,7 @@ class _PlaceWidget extends StatelessWidget {
         ),
         Text(
           place.name,
-          style: const TextStyle(fontSize: 20),
+          style: const TextStyle(fontSize: 18),
         ),
       ],
     );

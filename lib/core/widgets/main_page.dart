@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:itdols/core/states/screen_state.dart';
 import 'package:itdols/features/jobs/presentation/jobs_page.dart';
 import 'package:itdols/features/places/presentation/places_page.dart';
 import 'package:itdols/features/routes/presentation/routes_page.dart';
 
-class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+class MainPage extends ConsumerWidget {
+  MainPage({super.key});
 
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
   int _curentPage = 0;
 
   var pages = {
@@ -28,7 +25,8 @@ class _MainPageState extends State<MainPage> {
   };
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    _curentPage = ref.watch(screenStateHolder);
     return SafeArea(
       child: Scaffold(
         body: Row(
@@ -36,9 +34,7 @@ class _MainPageState extends State<MainPage> {
             NavigationRail(
               labelType: NavigationRailLabelType.all,
               selectedIndex: _curentPage,
-              onDestinationSelected: (value) => setState(() {
-                _curentPage = value;
-              }),
+              onDestinationSelected: (value) => ref.read(screenStateHolder.notifier).setScreen(value),
               destinations: List.generate(
                 icons.length,
                 (index) => NavigationRailDestination(
@@ -52,7 +48,11 @@ class _MainPageState extends State<MainPage> {
               width: 1,
               thickness: 1,
             ),
-            Expanded(child: pages[_curentPage] as Widget),
+            Expanded(
+              child: LayoutBuilder(
+                builder: (p0, p1) => pages[_curentPage] as Widget,
+              ),
+            ),
           ],
         ),
       ),
