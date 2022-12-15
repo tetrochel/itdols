@@ -122,12 +122,26 @@ class RouteWidgetState extends ConsumerState<RouteWidget> {
     controller.text = widget.route.duration.toString();
   }
 
+  void showMessage(String text) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      duration: const Duration(milliseconds: 1200),
+      backgroundColor: Colors.red,
+      content: Text(
+        text,
+      ),
+    ));
+  }
+
   void finishEditing() async {
     final int? value = int.tryParse(controller.text);
     if (value == null) {
+      showMessage('Введите целое число!');
+      focusNode.requestFocus();
       return;
     }
     if (value <= 0) {
+      showMessage('Введите положительное число!');
+      focusNode.requestFocus();
       return;
     }
     setState(() {

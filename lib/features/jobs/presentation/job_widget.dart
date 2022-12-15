@@ -156,6 +156,16 @@ class JobWidgetState extends ConsumerState<JobWidget> {
     );
   }
 
+  void showMessage(String text) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      duration: const Duration(milliseconds: 1200),
+      backgroundColor: Colors.red,
+      content: Text(
+        text,
+      ),
+    ));
+  }
+
   void startEditing() {
     setState(() {
       isEditing = true;
@@ -165,19 +175,22 @@ class JobWidgetState extends ConsumerState<JobWidget> {
   }
 
   void finishEditing() async {
-    setState(() {
-      isEditing = false;
-    });
     if (nameController.text.isEmpty) {
+      showMessage('Введите непустое название дела!');
       return;
     }
     final int? value = int.tryParse(durationController.text);
     if (value == null) {
+      showMessage('Введите целое число!');
       return;
     }
     if (value <= 0) {
+      showMessage('Введите положительное число!');
       return;
     }
+    setState(() {
+      isEditing = false;
+    });
     await ref.read(jobsController).setJob(widget.job.copyWith(
           name: nameController.text,
           duration: value,

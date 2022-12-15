@@ -6,7 +6,7 @@ import 'package:itdols/features/routes/domain/states/routes_state.dart';
 
 StateNotifierProvider<WidgetStateHolder, WidgetState?> widgetStateHolder =
     StateNotifierProvider<WidgetStateHolder, WidgetState?>(
-  (ref) => WidgetStateHolder(null),
+  (ref) => WidgetStateHolder(WidgetState.loading),
 );
 
 Provider<RoutesController> routesController = Provider<RoutesController>(

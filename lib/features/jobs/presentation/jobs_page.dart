@@ -45,7 +45,10 @@ class JobsPage extends ConsumerWidget {
             child: ListView.separated(
               physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
               itemCount: jobs!.length,
-              itemBuilder: (BuildContext context, int index) => JobWidget(job: jobs![index], places: places!,),
+              itemBuilder: (BuildContext context, int index) => JobWidget(
+                job: jobs![index],
+                places: places!,
+              ),
               separatorBuilder: (BuildContext context, int index) => const Divider(
                 color: Colors.grey,
                 height: 1,

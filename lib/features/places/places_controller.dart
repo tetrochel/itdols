@@ -5,7 +5,7 @@ import 'package:itdols/features/places/domain/states/places_state.dart';
 
 StateNotifierProvider<WidgetStateHolder, WidgetState?> widgetStateHolder =
     StateNotifierProvider<WidgetStateHolder, WidgetState?>(
-  (ref) => WidgetStateHolder(null),
+  (ref) => WidgetStateHolder(WidgetState.loading),
 );
 
 Provider<PlacesController> placesController = Provider<PlacesController>(
@@ -28,7 +28,7 @@ class PlacesController {
     widgetStateHolder.setWidgetState(WidgetState.loading);
 
     List<PlaceModel> places = [];
-    await Future.delayed(const Duration(microseconds: 1));
+    await Future.delayed(const Duration(microseconds: 50));
     places = [
       PlaceModel('Дом', '9b62e665-d042-4bd6-a3bd-47ad31ea0b36'),
       PlaceModel('Работа', '7725233e-1db2-4c80-9db2-db9415fb777a'),

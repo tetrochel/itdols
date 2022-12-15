@@ -100,6 +100,16 @@ class PlaceWidgetState extends ConsumerState<PlaceWidget> {
     );
   }
 
+  void showMessage(String text) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      duration: const Duration(milliseconds: 1200),
+      backgroundColor: Colors.red,
+      content: Text(
+        text,
+      ),
+    ));
+  }
+
   void startEditing() {
     setState(() {
       isEditing = true;
@@ -109,6 +119,10 @@ class PlaceWidgetState extends ConsumerState<PlaceWidget> {
   }
 
   void finishEditing() async {
+    if (controller.text.isEmpty) {
+      showMessage('Введите непустое название!');
+      return;
+    }
     setState(() {
       isEditing = false;
     });
