@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:itdols/core/widgets/messeger.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -86,16 +87,6 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void showMessage(String text, BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      duration: const Duration(milliseconds: 1200),
-      backgroundColor: Colors.red,
-      content: Text(
-        text,
-      ),
-    ));
   }
 
   void finishLogin(BuildContext context) {

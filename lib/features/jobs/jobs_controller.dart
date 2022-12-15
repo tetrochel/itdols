@@ -10,6 +10,11 @@ StateNotifierProvider<WidgetStateHolder, WidgetState?> widgetStateHolder =
   (ref) => WidgetStateHolder(WidgetState.loading),
 );
 
+StateNotifierProvider<PlacesStateHolder, List<PlaceModel>?> placesStateHolder =
+    StateNotifierProvider<PlacesStateHolder, List<PlaceModel>?>(
+  (ref) => PlacesStateHolder(null),
+);
+
 Provider<JobsController> jobsController = Provider<JobsController>(
   (ref) => JobsController(
     jobsStateHolder: ref.watch(jobsStateHolder.notifier),
@@ -33,7 +38,7 @@ class JobsController {
     widgetStateHolder.setWidgetState(WidgetState.loading);
 
     List<JobModel> jobs = [];
-    await Future.delayed(const Duration(microseconds: 1));
+    await Future.delayed(const Duration(milliseconds: 100));
     jobs = [
       JobModel(
         'Вещи постирать',
@@ -60,15 +65,13 @@ class JobsController {
         120,
       ),
     ];
-
+    await getPlaces();
     jobsStateHolder.setAll(jobs);
     widgetStateHolder.setWidgetState(WidgetState.loaded);
   }
 
   // TODO: contacting the API
   Future getPlaces() async {
-    widgetStateHolder.setWidgetState(WidgetState.loading);
-
     List<PlaceModel> places = [];
     await Future.delayed(const Duration(microseconds: 1));
     places = [
@@ -81,7 +84,6 @@ class JobsController {
     ];
 
     placesStateHolder.setAll(places);
-    widgetStateHolder.setWidgetState(WidgetState.loaded);
   }
 
   // TODO: contacting the API

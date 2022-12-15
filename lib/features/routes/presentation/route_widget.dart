@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:itdols/core/widgets/messeger.dart';
 import 'package:itdols/core/widgets/place_color_circle.dart';
 import 'package:itdols/features/places/domain/models/place_model.dart';
 import 'package:itdols/features/routes/domain/models/route_model.dart';
@@ -51,7 +52,7 @@ class RouteWidgetState extends ConsumerState<RouteWidget> {
                               height: 30,
                               child: TextFormField(
                                 key: _formKey,
-                                onFieldSubmitted: (value) => finishEditing(),
+                                onFieldSubmitted: (value) => finishEditing(context),
                                 style: const TextStyle(fontSize: 16),
                                 controller: controller,
                                 focusNode: focusNode,
@@ -85,7 +86,7 @@ class RouteWidgetState extends ConsumerState<RouteWidget> {
                         backgroundColor: Colors.green,
                         foregroundColor: Colors.white,
                       ),
-                      onPressed: finishEditing,
+                      onPressed: () => finishEditing(context),
                       child: const Text(
                         'Сохранить',
                       ),
@@ -122,25 +123,15 @@ class RouteWidgetState extends ConsumerState<RouteWidget> {
     controller.text = widget.route.duration.toString();
   }
 
-  void showMessage(String text) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      duration: const Duration(milliseconds: 1200),
-      backgroundColor: Colors.red,
-      content: Text(
-        text,
-      ),
-    ));
-  }
-
-  void finishEditing() async {
+  void finishEditing(BuildContext context) async {
     final int? value = int.tryParse(controller.text);
     if (value == null) {
-      showMessage('Введите целое число!');
+      showMessage('Введите целое число!', context);
       focusNode.requestFocus();
       return;
     }
     if (value <= 0) {
-      showMessage('Введите положительное число!');
+      showMessage('Введите положительное число!', context);
       focusNode.requestFocus();
       return;
     }

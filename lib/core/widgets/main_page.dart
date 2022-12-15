@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itdols/core/states/screen_state.dart';
+import 'package:itdols/features/calculation/presentation/calculation_page.dart';
 import 'package:itdols/features/jobs/jobs_controller.dart';
 import 'package:itdols/features/jobs/presentation/jobs_page.dart';
 import 'package:itdols/features/places/places_controller.dart';
@@ -14,7 +15,7 @@ class MainPage extends ConsumerWidget {
   int _curentPage = 0;
 
   var pages = {
-    0: Container(), // TODO: swap to calculation screen
+    0: CalculationPage(),
     1: JobsPage(),
     2: PlacesPage(),
     3: RoutePage(),

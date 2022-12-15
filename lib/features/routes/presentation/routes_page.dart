@@ -25,7 +25,7 @@ class RoutePage extends ConsumerWidget {
         const HeaderWidget(
           label: 'Список путей',
         ),
-        if (widgetState == WidgetState.loaded)
+        if (widgetState == WidgetState.loaded && routes != null)
           Expanded(
             child: ListView.separated(
               physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),

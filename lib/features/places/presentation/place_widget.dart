@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:itdols/core/widgets/messeger.dart';
 import 'package:itdols/core/widgets/place_color_circle.dart';
 import 'package:itdols/features/places/domain/models/place_model.dart';
 import 'package:itdols/features/places/places_controller.dart';
@@ -36,7 +37,7 @@ class PlaceWidgetState extends ConsumerState<PlaceWidget> {
                 ? SizedBox(
                     width: 400,
                     child: TextFormField(
-                      onFieldSubmitted: (value) => finishEditing(),
+                      onFieldSubmitted: (value) => finishEditing(context),
                       style: const TextStyle(fontSize: 20),
                       controller: controller,
                       focusNode: focusNode,
@@ -59,7 +60,7 @@ class PlaceWidgetState extends ConsumerState<PlaceWidget> {
                           backgroundColor: Colors.green,
                           foregroundColor: Colors.white,
                         ),
-                        onPressed: finishEditing,
+                        onPressed: () => finishEditing(context),
                         child: const Text(
                           'Сохранить',
                         ),
@@ -70,7 +71,7 @@ class PlaceWidgetState extends ConsumerState<PlaceWidget> {
                           backgroundColor: Colors.red,
                           foregroundColor: Colors.white,
                         ),
-                        onPressed: finishEditing, // TODO
+                        onPressed: () => finishEditing(context), // TODO
                         child: const Text(
                           'Удалить',
                         ),
@@ -100,16 +101,6 @@ class PlaceWidgetState extends ConsumerState<PlaceWidget> {
     );
   }
 
-  void showMessage(String text) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      duration: const Duration(milliseconds: 1200),
-      backgroundColor: Colors.red,
-      content: Text(
-        text,
-      ),
-    ));
-  }
-
   void startEditing() {
     setState(() {
       isEditing = true;
@@ -118,9 +109,9 @@ class PlaceWidgetState extends ConsumerState<PlaceWidget> {
     controller.text = widget.place.name;
   }
 
-  void finishEditing() async {
+  void finishEditing(BuildContext context) async {
     if (controller.text.isEmpty) {
-      showMessage('Введите непустое название!');
+      showMessage('Введите непустое название!', context);
       return;
     }
     setState(() {

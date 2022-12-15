@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:itdols/core/widgets/messeger.dart';
 import 'package:itdols/core/widgets/place_color_circle.dart';
 import 'package:itdols/features/jobs/domain/models/job_model.dart';
 import 'package:itdols/features/jobs/jobs_controller.dart';
@@ -37,7 +38,6 @@ class JobWidgetState extends ConsumerState<JobWidget> {
                 child: isEditing
                     ? TextFormField(
                         controller: nameController,
-                        onFieldSubmitted: (value) => finishEditing(),
                         style: const TextStyle(fontSize: 20),
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
@@ -94,7 +94,6 @@ class JobWidgetState extends ConsumerState<JobWidget> {
                       child: TextFormField(
                         textAlign: TextAlign.end,
                         controller: durationController,
-                        onFieldSubmitted: (value) => finishEditing(),
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           contentPadding: EdgeInsets.symmetric(horizontal: 5),
@@ -116,7 +115,7 @@ class JobWidgetState extends ConsumerState<JobWidget> {
                         backgroundColor: Colors.green,
                         foregroundColor: Colors.white,
                       ),
-                      onPressed: finishEditing,
+                      onPressed: () => finishEditing(context),
                       child: const Text(
                         'Сохранить',
                       ),
@@ -127,7 +126,7 @@ class JobWidgetState extends ConsumerState<JobWidget> {
                         backgroundColor: Colors.red,
                         foregroundColor: Colors.white,
                       ),
-                      onPressed: finishEditing, // TODO
+                      onPressed: () => finishEditing(context), // TODO
                       child: const Text(
                         'Удалить',
                       ),
@@ -156,16 +155,6 @@ class JobWidgetState extends ConsumerState<JobWidget> {
     );
   }
 
-  void showMessage(String text) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      duration: const Duration(milliseconds: 1200),
-      backgroundColor: Colors.red,
-      content: Text(
-        text,
-      ),
-    ));
-  }
-
   void startEditing() {
     setState(() {
       isEditing = true;
@@ -174,18 +163,18 @@ class JobWidgetState extends ConsumerState<JobWidget> {
     durationController.text = widget.job.duration.toString();
   }
 
-  void finishEditing() async {
+  void finishEditing(BuildContext context) async {
     if (nameController.text.isEmpty) {
-      showMessage('Введите непустое название дела!');
+      showMessage('Введите непустое название дела!', context);
       return;
     }
     final int? value = int.tryParse(durationController.text);
     if (value == null) {
-      showMessage('Введите целое число!');
+      showMessage('Введите целое число!', context);
       return;
     }
     if (value <= 0) {
-      showMessage('Введите положительное число!');
+      showMessage('Введите положительное число!', context);
       return;
     }
     setState(() {

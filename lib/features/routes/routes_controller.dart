@@ -29,7 +29,7 @@ class RoutesController {
     widgetStateHolder.setWidgetState(WidgetState.loading);
 
     List<RouteModel> routes = [];
-    await Future.delayed(const Duration(microseconds: 1));
+    await Future.delayed(const Duration(milliseconds: 100));
     routes = [
       RouteModel(
         firstPlace: PlaceModel('Дом', '9b62e665-d042-4bd6-a3bd-47ad31ea0b36'),

@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProviderScope(
       child: MaterialApp(
-        initialRoute: '/login',
+        initialRoute: '/',
         routes: routes,
         theme: ThemeData(
           colorSchemeSeed: const Color(0xff61caff),

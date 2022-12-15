@@ -33,7 +33,7 @@ class PlacesPage extends ConsumerWidget {
             )
           ],
         ),
-        if (widgetState == WidgetState.loaded)
+        if (widgetState == WidgetState.loaded && places != null)
           Expanded(
             child: ListView.separated(
               physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),

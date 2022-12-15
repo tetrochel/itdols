@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:itdols/core/widgets/messeger.dart';
 
 class RegistrationPage extends ConsumerWidget {
   RegistrationPage({super.key});
@@ -108,16 +109,6 @@ class RegistrationPage extends ConsumerWidget {
         ),
       ),
     );
-  }
-
-  void showMessage(String text, BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      duration: const Duration(milliseconds: 1200),
-      backgroundColor: Colors.red,
-      content: Text(
-        text,
-      ),
-    ));
   }
 
   void finishRegistration(BuildContext context) {

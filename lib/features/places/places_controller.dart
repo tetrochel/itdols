@@ -8,6 +8,11 @@ StateNotifierProvider<WidgetStateHolder, WidgetState?> widgetStateHolder =
   (ref) => WidgetStateHolder(WidgetState.loading),
 );
 
+StateNotifierProvider<PlacesStateHolder, List<PlaceModel>?> placesStateHolder =
+    StateNotifierProvider<PlacesStateHolder, List<PlaceModel>?>(
+  (ref) => PlacesStateHolder(null),
+);
+
 Provider<PlacesController> placesController = Provider<PlacesController>(
   (ref) => PlacesController(
     placesStateHolder: ref.watch(placesStateHolder.notifier),
@@ -28,7 +33,7 @@ class PlacesController {
     widgetStateHolder.setWidgetState(WidgetState.loading);
 
     List<PlaceModel> places = [];
-    await Future.delayed(const Duration(microseconds: 50));
+    await Future.delayed(const Duration(milliseconds: 100));
     places = [
       PlaceModel('Дом', '9b62e665-d042-4bd6-a3bd-47ad31ea0b36'),
       PlaceModel('Работа', '7725233e-1db2-4c80-9db2-db9415fb777a'),

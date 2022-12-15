@@ -40,7 +40,7 @@ class JobsPage extends ConsumerWidget {
             )
           ],
         ),
-        if (widgetState == WidgetState.loaded)
+        if (widgetState == WidgetState.loaded && jobs != null && places != null)
           Expanded(
             child: ListView.separated(
               physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
