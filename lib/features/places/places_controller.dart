@@ -3,9 +3,9 @@ import 'package:itdols/core/states/widget_state.dart';
 import 'package:itdols/features/places/domain/models/place_model.dart';
 import 'package:itdols/features/places/domain/states/places_state.dart';
 
-StateNotifierProvider<WidgetStateHolder, WidgetState> widgetStateHolder =
-    StateNotifierProvider<WidgetStateHolder, WidgetState>(
-  (ref) => WidgetStateHolder(WidgetState.loading),
+StateNotifierProvider<WidgetStateHolder, WidgetState?> widgetStateHolder =
+    StateNotifierProvider<WidgetStateHolder, WidgetState?>(
+  (ref) => WidgetStateHolder(null),
 );
 
 Provider<PlacesController> placesController = Provider<PlacesController>(

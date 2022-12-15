@@ -5,9 +5,9 @@ import 'package:itdols/features/jobs/domain/states/jobs_state.dart';
 import 'package:itdols/features/places/domain/models/place_model.dart';
 import 'package:itdols/features/places/domain/states/places_state.dart';
 
-StateNotifierProvider<WidgetStateHolder, WidgetState> widgetStateHolder =
-    StateNotifierProvider<WidgetStateHolder, WidgetState>(
-  (ref) => WidgetStateHolder(WidgetState.loading),
+StateNotifierProvider<WidgetStateHolder, WidgetState?> widgetStateHolder =
+    StateNotifierProvider<WidgetStateHolder, WidgetState?>(
+  (ref) => WidgetStateHolder(null),
 );
 
 Provider<JobsController> jobsController = Provider<JobsController>(

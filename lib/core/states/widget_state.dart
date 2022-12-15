@@ -6,7 +6,7 @@ enum WidgetState {
   error,
 }
 
-class WidgetStateHolder extends StateNotifier<WidgetState> {
+class WidgetStateHolder extends StateNotifier<WidgetState?> {
   WidgetStateHolder(super.state);
 
   void setWidgetState(WidgetState newWidgetState) {

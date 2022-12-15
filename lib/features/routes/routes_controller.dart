@@ -4,9 +4,9 @@ import 'package:itdols/features/places/domain/models/place_model.dart';
 import 'package:itdols/features/routes/domain/models/route_model.dart';
 import 'package:itdols/features/routes/domain/states/routes_state.dart';
 
-StateNotifierProvider<WidgetStateHolder, WidgetState> widgetStateHolder =
-    StateNotifierProvider<WidgetStateHolder, WidgetState>(
-  (ref) => WidgetStateHolder(WidgetState.loading),
+StateNotifierProvider<WidgetStateHolder, WidgetState?> widgetStateHolder =
+    StateNotifierProvider<WidgetStateHolder, WidgetState?>(
+  (ref) => WidgetStateHolder(null),
 );
 
 Provider<RoutesController> routesController = Provider<RoutesController>(
