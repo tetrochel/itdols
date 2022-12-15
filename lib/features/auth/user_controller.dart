@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:itdols/auth/domain/models/user_model.dart';
-import 'package:itdols/auth/domain/states/user_state.dart';
+import 'package:itdols/features/auth/domain/models/user_model.dart';
+import 'package:itdols/features/auth/domain/states/user_state.dart';
 import 'package:itdols/core/states/widget_state.dart';
 
 StateNotifierProvider<WidgetStateHolder, WidgetState?> widgetStateHolder =

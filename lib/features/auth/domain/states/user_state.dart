@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:itdols/auth/domain/models/user_model.dart';
+import 'package:itdols/features/auth/domain/models/user_model.dart';
 
 StateNotifierProvider<UserStateHolder, UserModel?> userStateHolder = StateNotifierProvider<UserStateHolder, UserModel?>(
   (ref) => UserStateHolder(null),
