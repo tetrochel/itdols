@@ -2,33 +2,33 @@ import 'dart:convert';
 
 class UserModel {
   final String username;
-  final String id;
+  final String token;
   UserModel({
     required this.username,
-    required this.id,
+    required this.token,
   });
 
   UserModel copyWith({
     String? username,
-    String? id,
+    String? token,
   }) {
     return UserModel(
       username: username ?? this.username,
-      id: id ?? this.id,
+      token: token ?? this.token,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'username': username,
-      'id': id,
+      'token': token,
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
       username: map['username'] as String,
-      id: map['id'] as String,
+      token: map['token'] as String,
     );
   }
 
@@ -37,15 +37,15 @@ class UserModel {
   factory UserModel.fromJson(String source) => UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'UserModel(username: $username, id: $id)';
+  String toString() => 'UserModel(username: $username, token: $token)';
 
   @override
   bool operator ==(covariant UserModel other) {
     if (identical(this, other)) return true;
 
-    return other.username == username && other.id == id;
+    return other.username == username && other.token == token;
   }
 
   @override
-  int get hashCode => username.hashCode ^ id.hashCode;
+  int get hashCode => username.hashCode ^ token.hashCode;
 }

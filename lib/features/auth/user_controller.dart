@@ -8,7 +8,7 @@ StateNotifierProvider<WidgetStateHolder, WidgetState?> widgetStateHolder =
   (ref) => WidgetStateHolder(WidgetState.loading),
 );
 
-Provider<UserController> placesController = Provider<UserController>(
+Provider<UserController> userController = Provider<UserController>(
   (ref) => UserController(
     userStateHolder: ref.watch(userStateHolder.notifier),
   ),
@@ -22,7 +22,7 @@ class UserController {
 
   // TODO: contacting the API
   Future getUser(String username) async {
-    setUser(UserModel(username: username, id: '9b62e665-d042-4bd6-a3bd-47ad31ea0b36'));
+    setUser(UserModel(username: username, token: '9b62e665-d042-4bd6-a3bd-47ad31ea0b36'));
   }
 
   Future setUser(UserModel user) async {
