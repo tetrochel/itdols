@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itdols/core/states/screen_state.dart';
-import 'package:itdols/features/auth/presentation/login_page.dart';
 import 'package:itdols/features/auth/presentation/logout_page.dart';
-import 'package:itdols/features/auth/user_controller.dart';
 import 'package:itdols/features/calculation/presentation/calculation_page.dart';
 import 'package:itdols/features/jobs/jobs_controller.dart';
 import 'package:itdols/features/jobs/presentation/jobs_page.dart';
@@ -22,7 +20,7 @@ class MainPage extends ConsumerWidget {
     1: JobsPage(),
     2: PlacesPage(),
     3: RoutePage(),
-    4: LogoutPage(),
+    4: const LogoutPage(),
   };
 
   var icons = {

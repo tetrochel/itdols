@@ -5,7 +5,7 @@ import 'package:itdols/features/places/domain/models/place_model.dart';
 
 class PlacesAPIMethods {
   static Future<List<PlaceModel>?> getPlaces(String token) async {
-    http.Response response = await http.post(
+    http.Response response = await http.get(
       Uri.parse('${API.mainURL}/places'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -13,7 +13,9 @@ class PlacesAPIMethods {
       },
     );
     if (response.statusCode == 200) {
-      List<PlaceModel> places = await jsonDecode(response.body).map((e) => PlaceModel.fromMap(e)).toList();
+      var raw_places = await jsonDecode(response.body);
+      List<PlaceModel> places =
+          List<PlaceModel>.generate(raw_places.length, (index) => PlaceModel.fromMap(raw_places[index]));
       return places;
     } else {
       return null;

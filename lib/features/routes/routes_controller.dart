@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itdols/core/states/widget_state.dart';
+import 'package:itdols/core/widgets/messeger.dart';
 import 'package:itdols/features/auth/domain/states/user_state.dart';
 import 'package:itdols/features/places/domain/models/place_model.dart';
 import 'package:itdols/features/routes/data/api/routes_api_methods.dart';
@@ -42,8 +44,8 @@ class RoutesController {
     }
   }
 
-  // TODO: contacting the API
   Future setRoute(RouteModel route) async {
-    print(route);
+    bool result = await RoutesAPIMethods.setRoute(userStateHolder.state!.token, route);
+    return result;
   }
 }

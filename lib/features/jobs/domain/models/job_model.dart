@@ -45,7 +45,7 @@ class JobModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'name': name,
-      'id': id,
+      'job_id': id,
       'place': place.toMap(),
       'duration': duration,
     };
@@ -54,7 +54,7 @@ class JobModel {
   factory JobModel.fromMap(Map<String, dynamic> map) {
     return JobModel(
       map['name'] as String,
-      map['id'] as String,
+      map['job_id'] as String,
       PlaceModel.fromMap(map['place'] as Map<String, dynamic>),
       map['duration'] as int,
     );

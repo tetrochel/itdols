@@ -139,7 +139,9 @@ class RouteWidgetState extends ConsumerState<RouteWidget> {
       isEditing = false;
     });
     focusNode.unfocus();
-    await ref.read(routesController).setRoute(widget.route.copyWith(duration: value));
+    if (!await ref.read(routesController).setRoute(widget.route.copyWith(duration: value))) {
+      showMessage('Ошибка сети!', context);
+    }
     await ref.read(routesController).getRoutes();
   }
 }

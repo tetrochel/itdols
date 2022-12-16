@@ -22,7 +22,6 @@ class UserController {
     required this.userStateHolder,
   });
 
-  // TODO: contacting the API
   Future addUser(String username, String password) async {
     String? token = await AuthAPIMethods.registerUser(username, password);
     if (token != null) {

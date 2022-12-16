@@ -22,14 +22,14 @@ class PlaceModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'name': name,
-      'placeID': id,
+      'place_id': id,
     };
   }
 
   factory PlaceModel.fromMap(Map<String, dynamic> map) {
     return PlaceModel(
       map['name'] as String,
-      map['placeID'] as String,
+      map['place_id'] as String,
     );
   }
 

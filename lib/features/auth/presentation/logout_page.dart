@@ -11,7 +11,6 @@ class LogoutPage extends ConsumerWidget {
       child: ElevatedButton(
         onPressed: () {
           ref.read(userController).setUser(null);
-          print('sdasda');
           Navigator.pushReplacementNamed(context, '/login');
         },
         child: const Text(
