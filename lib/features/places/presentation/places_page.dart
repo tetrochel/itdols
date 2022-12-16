@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itdols/core/states/widget_state.dart';
+import 'package:itdols/core/widgets/error_page.dart';
 import 'package:itdols/core/widgets/header_widget.dart';
 import 'package:itdols/features/places/domain/models/place_model.dart';
-import 'package:itdols/features/places/domain/states/places_state.dart';
 import 'package:itdols/features/places/presentation/place_widget.dart';
 import 'package:itdols/features/places/places_controller.dart';
 
@@ -49,9 +49,7 @@ class PlacesPage extends ConsumerWidget {
             ),
           )
         else if (widgetState == WidgetState.error)
-          Container(
-              // TODO: create error screen
-              )
+          ErrorPage(onPressed: () => ref.read(placesController).getPlaces())
         else
           const Expanded(child: Center(child: CircularProgressIndicator()))
       ],

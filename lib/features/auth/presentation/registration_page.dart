@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itdols/core/widgets/messeger.dart';
+import 'package:itdols/features/auth/domain/states/user_state.dart';
+import 'package:itdols/features/auth/user_controller.dart';
 
 class RegistrationPage extends ConsumerWidget {
   RegistrationPage({super.key});
@@ -69,7 +71,7 @@ class RegistrationPage extends ConsumerWidget {
                     autocorrect: false,
                     style: const TextStyle(fontSize: 20),
                     controller: repeatPasswordController,
-                    onFieldSubmitted: (value) => finishRegistration(context),
+                    onFieldSubmitted: (value) => finishRegistration(context, ref),
                     decoration: const InputDecoration(
                       labelText: 'Повтор пароля',
                       border: OutlineInputBorder(),
@@ -82,7 +84,7 @@ class RegistrationPage extends ConsumerWidget {
                   height: 40,
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () => finishRegistration(context),
+                    onPressed: () => finishRegistration(context, ref),
                     child: const Text(
                       'Зарегистрироваться',
                       style: TextStyle(fontSize: 18),
@@ -111,7 +113,7 @@ class RegistrationPage extends ConsumerWidget {
     );
   }
 
-  void finishRegistration(BuildContext context) {
+  void finishRegistration(BuildContext context, WidgetRef ref, [bool mounted = true]) async {
     if (usernameController.text.isEmpty) {
       showMessage('Введите логин!', context);
       return;
@@ -124,6 +126,14 @@ class RegistrationPage extends ConsumerWidget {
       showMessage('Пароли должны совпадать!', context);
       return;
     }
-    // TODO: contacting the API
+    await ref.read(userController).addUser(usernameController.text, passwordController.text);
+    if (ref.read(userStateHolder) != null) {
+      if (!mounted) return;
+      Navigator.pushReplacementNamed(context, '/');
+    } else {
+      if (!mounted) return;
+      showMessage('Ошибка регистрации!', context);
+    }
+    return;
   }
 }

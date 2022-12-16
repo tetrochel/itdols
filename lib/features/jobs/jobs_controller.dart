@@ -1,5 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itdols/core/states/widget_state.dart';
+import 'package:itdols/features/auth/domain/states/user_state.dart';
+import 'package:itdols/features/jobs/data/api/jobs_api_methods.dart';
+import 'package:itdols/features/places/data/api/places_api_methods.dart';
 import 'package:itdols/features/jobs/domain/models/job_model.dart';
 import 'package:itdols/features/jobs/domain/states/jobs_state.dart';
 import 'package:itdols/features/places/domain/models/place_model.dart';
@@ -20,6 +23,7 @@ Provider<JobsController> jobsController = Provider<JobsController>(
     jobsStateHolder: ref.watch(jobsStateHolder.notifier),
     placesStateHolder: ref.watch(placesStateHolder.notifier),
     widgetStateHolder: ref.watch(widgetStateHolder.notifier),
+    userStateHolder: ref.watch(userStateHolder.notifier),
   ),
 );
 
@@ -27,63 +31,42 @@ class JobsController {
   final JobsStateHolder jobsStateHolder;
   final PlacesStateHolder placesStateHolder;
   final WidgetStateHolder widgetStateHolder;
+  final UserStateHolder userStateHolder;
   JobsController({
     required this.jobsStateHolder,
     required this.placesStateHolder,
     required this.widgetStateHolder,
+    required this.userStateHolder,
   });
 
-  // TODO: contacting the API
   Future getJobs() async {
     widgetStateHolder.setWidgetState(WidgetState.loading);
-
-    List<JobModel> jobs = [];
-    await Future.delayed(const Duration(milliseconds: 100));
-    jobs = [
-      JobModel(
-        'Вещи постирать',
-        '058fb1be-329c-4e01-9bbe-cfe9f68c5c8f',
-        PlaceModel('Дом', '9b62e665-d042-4bd6-a3bd-47ad31ea0b36'),
-        70,
-      ),
-      JobModel(
-        'Работать',
-        '058fb1be-329c-4e01-9bbe-cfe9f68c5c8f',
-        PlaceModel('Работа', '7725233e-1db2-4c80-9db2-db9415fb777a'),
-        240,
-      ),
-      JobModel(
-        'Кушать',
-        '058fb1be-329c-4e01-9bbe-cfe9f68c5c8f',
-        PlaceModel('Кафе', '36b8a6da-fc33-4e0a-a64c-e9e41dfaf2e5'),
-        30,
-      ),
-      JobModel(
-        'Внести правки в книгу',
-        '058fb1be-329c-4e01-9bbe-cfe9f68c5c8f',
-        PlaceModel('Редакция', '1dca6467-92ae-4d65-b44a-353b5918930a'),
-        120,
-      ),
-    ];
-    await getPlaces();
-    jobsStateHolder.setAll(jobs);
-    widgetStateHolder.setWidgetState(WidgetState.loaded);
+    List<JobModel>? jobs = [];
+    jobs = await JobesAPIMethods.getJobs(userStateHolder.state!.token);
+    bool isOK = await getPlaces();
+    if (isOK) {
+      if (jobs == null) {
+        jobsStateHolder.setAll([]);
+        widgetStateHolder.setWidgetState(WidgetState.error);
+      } else {
+        jobsStateHolder.setAll(jobs);
+        widgetStateHolder.setWidgetState(WidgetState.loaded);
+      }
+    } else {
+      jobsStateHolder.setAll([]);
+      widgetStateHolder.setWidgetState(WidgetState.error);
+    }
   }
 
-  // TODO: contacting the API
-  Future getPlaces() async {
-    List<PlaceModel> places = [];
-    await Future.delayed(const Duration(microseconds: 1));
-    places = [
-      PlaceModel('Дом', '9b62e665-d042-4bd6-a3bd-47ad31ea0b36'),
-      PlaceModel('Работа', '7725233e-1db2-4c80-9db2-db9415fb777a'),
-      PlaceModel('Учёба', 'dc2d6107-5f5a-47fe-b824-dc434d020476'),
-      PlaceModel('Просто', 'f84b6392-8996-437b-9316-23250a5fcf8c'),
-      PlaceModel('Редакция', '1dca6467-92ae-4d65-b44a-353b5918930a'),
-      PlaceModel('Кафе', '36b8a6da-fc33-4e0a-a64c-e9e41dfaf2e5'),
-    ];
-
-    placesStateHolder.setAll(places);
+  Future<bool> getPlaces() async {
+    List<PlaceModel>? places = [];
+    places = await PlacesAPIMethods.getPlaces(userStateHolder.state!.token);
+    if (places == null) {
+      placesStateHolder.setAll([]);
+    } else {
+      placesStateHolder.setAll(places);
+    }
+    return places != null;
   }
 
   // TODO: contacting the API

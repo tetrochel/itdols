@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itdols/core/states/widget_state.dart';
+import 'package:itdols/core/widgets/error_page.dart';
 import 'package:itdols/core/widgets/header_widget.dart';
 import 'package:itdols/features/jobs/domain/models/job_model.dart';
 import 'package:itdols/features/jobs/domain/states/jobs_state.dart';
@@ -59,9 +60,10 @@ class JobsPage extends ConsumerWidget {
             ),
           )
         else if (widgetState == WidgetState.error)
-          Container(
-              // TODO: create error screen
-              )
+          ErrorPage(onPressed: () {
+            ref.read(jobsController).getJobs();
+            ref.read(jobsController).getPlaces();
+          })
         else
           const Expanded(child: Center(child: CircularProgressIndicator()))
       ],

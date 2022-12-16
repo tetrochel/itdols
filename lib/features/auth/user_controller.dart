@@ -1,4 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:itdols/features/auth/domain/data/api/auth_api_methods.dart';
+import 'package:itdols/features/auth/domain/data/local_user.dart';
 import 'package:itdols/features/auth/domain/models/user_model.dart';
 import 'package:itdols/features/auth/domain/states/user_state.dart';
 import 'package:itdols/core/states/widget_state.dart';
@@ -21,11 +23,17 @@ class UserController {
   });
 
   // TODO: contacting the API
-  Future getUser(String username) async {
-    setUser(UserModel(username: username, token: '9b62e665-d042-4bd6-a3bd-47ad31ea0b36'));
+  Future addUser(String username, String password) async {
+    String? token = await AuthAPIMethods.registerUser(username, password);
+    if (token != null) {
+      setUser(UserModel(username: username, token: token));
+    } else {
+      return;
+    }
   }
 
-  Future setUser(UserModel user) async {
+  Future setUser(UserModel? user) async {
+    await LocalUser.setUser(user);
     userStateHolder.setUser(user);
   }
 }

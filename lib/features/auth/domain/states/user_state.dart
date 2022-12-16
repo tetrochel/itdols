@@ -8,7 +8,7 @@ StateNotifierProvider<UserStateHolder, UserModel?> userStateHolder = StateNotifi
 class UserStateHolder extends StateNotifier<UserModel?> {
   UserStateHolder(super.state);
 
-  void setUser(UserModel user) {
+  void setUser(UserModel? user) {
     state = user;
   }
 }

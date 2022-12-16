@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itdols/core/states/widget_state.dart';
+import 'package:itdols/core/widgets/error_page.dart';
 import 'package:itdols/core/widgets/header_widget.dart';
 import 'package:itdols/features/routes/domain/models/route_model.dart';
 import 'package:itdols/features/routes/domain/states/routes_state.dart';
@@ -41,9 +42,7 @@ class RoutePage extends ConsumerWidget {
             ),
           )
         else if (widgetState == WidgetState.error)
-          Container(
-              // TODO: create error screen
-              )
+          ErrorPage(onPressed: () => ref.read(routesController).getRoutes())
         else
           const Expanded(child: Center(child: CircularProgressIndicator()))
       ],
