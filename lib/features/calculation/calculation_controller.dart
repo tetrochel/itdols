@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itdols/core/states/widget_state.dart';
-import 'package:itdols/features/auth/domain/models/user_model.dart';
 import 'package:itdols/features/auth/domain/states/user_state.dart';
 import 'package:itdols/features/places/data/api/places_api_methods.dart';
 import 'package:itdols/features/places/domain/models/place_model.dart';
@@ -37,7 +36,6 @@ class CalculationController {
   // TODO: contacting the API
   Future getPlaces() async {
     widgetStateHolder.setWidgetState(WidgetState.loading);
-
     List<PlaceModel>? places = [];
     places = await PlacesAPIMethods.getPlaces(userStateHolder.getUser()!.token);
     if (places != null) {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itdols/core/widgets/messeger.dart';
-import 'package:itdols/features/auth/domain/states/user_state.dart';
 import 'package:itdols/features/auth/user_controller.dart';
 
 class RegistrationPage extends ConsumerWidget {

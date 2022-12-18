@@ -68,10 +68,15 @@ class RouteWidgetState extends ConsumerState<RouteWidget> {
                             ),
                           ],
                         )
-                      : Text(
-                          'Время в пути: ${widget.route.getTimeString()}',
-                          style: const TextStyle(fontSize: 16),
-                        ),
+                      : widget.route.duration == 0
+                          ? const Text(
+                              'Требуется указать время!',
+                              style: TextStyle(fontSize: 16, color: Colors.redAccent),
+                            )
+                          : Text(
+                              'Время в пути: ${widget.route.getTimeString()}',
+                              style: const TextStyle(fontSize: 16),
+                            ),
                 ],
               ),
               _PlaceWidget(place: widget.route.secondPlace),
