@@ -42,7 +42,7 @@ class JobsController {
   Future getJobs() async {
     widgetStateHolder.setWidgetState(WidgetState.loading);
     List<JobModel>? jobs = [];
-    jobs = await JobesAPIMethods.getJobs(userStateHolder.state!.token);
+    jobs = await JobesAPIMethods.getJobs(userStateHolder.getUser()!.token);
     bool isOK = await getPlaces();
     if (isOK) {
       if (jobs == null) {
@@ -60,7 +60,7 @@ class JobsController {
 
   Future<bool> getPlaces() async {
     List<PlaceModel>? places = [];
-    places = await PlacesAPIMethods.getPlaces(userStateHolder.state!.token);
+    places = await PlacesAPIMethods.getPlaces(userStateHolder.getUser()!.token);
     if (places == null) {
       placesStateHolder.setAll([]);
     } else {

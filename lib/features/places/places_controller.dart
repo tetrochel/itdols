@@ -36,7 +36,7 @@ class PlacesController {
   Future getPlaces() async {
     widgetStateHolder.setWidgetState(WidgetState.loading);
     List<PlaceModel>? places = [];
-    places = await PlacesAPIMethods.getPlaces(userStateHolder.state!.token);
+    places = await PlacesAPIMethods.getPlaces(userStateHolder.getUser()!.token);
     if (places != null) {
       placesStateHolder.setAll(places);
       widgetStateHolder.setWidgetState(WidgetState.loaded);

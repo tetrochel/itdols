@@ -10,7 +10,7 @@ class CalculationPage extends ConsumerStatefulWidget {
   const CalculationPage({super.key});
 
   @override
-  _CalculationPageState createState() => _CalculationPageState();
+  ConsumerState<CalculationPage> createState() => _CalculationPageState();
 }
 
 class _CalculationPageState extends ConsumerState<CalculationPage> {

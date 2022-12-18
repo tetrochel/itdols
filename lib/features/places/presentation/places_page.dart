@@ -7,6 +7,7 @@ import 'package:itdols/features/places/domain/models/place_model.dart';
 import 'package:itdols/features/places/presentation/place_widget.dart';
 import 'package:itdols/features/places/places_controller.dart';
 
+// ignore: must_be_immutable
 class PlacesPage extends ConsumerWidget {
   PlacesPage({super.key});
 

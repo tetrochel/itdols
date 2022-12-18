@@ -14,12 +14,11 @@ class LoginPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return FutureBuilder<UserModel?>(
-      future: LocalUser.getUser(),
+    return FutureBuilder<bool>(
+      future: isUserGetted(ref),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.data != null) {
-            ref.read(userController).setUser(snapshot.data!);
+          if (snapshot.data!) {
             return MainPage();
           }
           return SafeArea(
@@ -110,6 +109,15 @@ class LoginPage extends ConsumerWidget {
         );
       },
     );
+  }
+
+  Future<bool> isUserGetted(WidgetRef ref) async {
+    UserModel? user = await LocalUser.getUser();
+    if (user == null) {
+      return false;
+    }
+    await ref.read(userController).setUser(user);
+    return true;
   }
 
   void finishLogin(BuildContext context) {

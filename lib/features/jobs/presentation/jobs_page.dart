@@ -8,8 +8,8 @@ import 'package:itdols/features/jobs/domain/states/jobs_state.dart';
 import 'package:itdols/features/jobs/jobs_controller.dart';
 import 'package:itdols/features/jobs/presentation/job_widget.dart';
 import 'package:itdols/features/places/domain/models/place_model.dart';
-import 'package:itdols/features/places/domain/states/places_state.dart';
 
+// ignore: must_be_immutable
 class JobsPage extends ConsumerWidget {
   JobsPage({super.key});
 

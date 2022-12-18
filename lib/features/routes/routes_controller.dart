@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itdols/core/states/widget_state.dart';
-import 'package:itdols/core/widgets/messeger.dart';
 import 'package:itdols/features/auth/domain/states/user_state.dart';
-import 'package:itdols/features/places/domain/models/place_model.dart';
 import 'package:itdols/features/routes/data/api/routes_api_methods.dart';
 import 'package:itdols/features/routes/domain/models/route_model.dart';
 import 'package:itdols/features/routes/domain/states/routes_state.dart';
@@ -34,7 +31,7 @@ class RoutesController {
   Future getRoutes() async {
     widgetStateHolder.setWidgetState(WidgetState.loading);
     List<RouteModel>? routes = [];
-    routes = await RoutesAPIMethods.getRoutes(userStateHolder.state!.token);
+    routes = await RoutesAPIMethods.getRoutes(userStateHolder.getUser()!.token);
     if (routes != null) {
       routesStateHolder.setAll(routes);
       widgetStateHolder.setWidgetState(WidgetState.loaded);
@@ -45,7 +42,7 @@ class RoutesController {
   }
 
   Future setRoute(RouteModel route) async {
-    bool result = await RoutesAPIMethods.setRoute(userStateHolder.state!.token, route);
+    bool result = await RoutesAPIMethods.setRoute(userStateHolder.getUser()!.token, route);
     return result;
   }
 }

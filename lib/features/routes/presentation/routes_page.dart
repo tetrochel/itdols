@@ -8,6 +8,7 @@ import 'package:itdols/features/routes/domain/states/routes_state.dart';
 import 'package:itdols/features/routes/presentation/route_widget.dart';
 import 'package:itdols/features/routes/routes_controller.dart';
 
+// ignore: must_be_immutable
 class RoutePage extends ConsumerWidget {
   RoutePage({super.key});
 

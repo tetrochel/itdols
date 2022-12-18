@@ -13,8 +13,8 @@ class JobesAPIMethods {
       },
     );
     if (response.statusCode == 200) {
-      var raw_jobs = await jsonDecode(response.body);
-      List<JobModel> jobs = List<JobModel>.generate(raw_jobs.length, (index) => JobModel.fromMap(raw_jobs[index]));
+      var rawJobs = await jsonDecode(response.body);
+      List<JobModel> jobs = List<JobModel>.generate(rawJobs.length, (index) => JobModel.fromMap(rawJobs[index]));
       return jobs;
     } else {
       return null;

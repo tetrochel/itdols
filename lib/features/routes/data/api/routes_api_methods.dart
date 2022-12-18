@@ -1,8 +1,6 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:itdols/core/data/api/api.dart';
-import 'package:itdols/core/widgets/messeger.dart';
 import 'package:itdols/features/routes/domain/models/route_model.dart';
 
 class RoutesAPIMethods {
@@ -15,9 +13,9 @@ class RoutesAPIMethods {
       },
     );
     if (response.statusCode == 200) {
-      var raw_routes = await jsonDecode(response.body);
+      var rawRoutes = await jsonDecode(response.body);
       List<RouteModel> routes =
-          List<RouteModel>.generate(raw_routes.length, (index) => RouteModel.fromMap(raw_routes[index]));
+          List<RouteModel>.generate(rawRoutes.length, (index) => RouteModel.fromMap(rawRoutes[index]));
       return routes;
     } else {
       return null;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itdols/core/states/screen_state.dart';
 import 'package:itdols/features/auth/presentation/logout_page.dart';
+import 'package:itdols/features/calculation/calculation_controller.dart';
 import 'package:itdols/features/calculation/presentation/calculation_page.dart';
 import 'package:itdols/features/jobs/jobs_controller.dart';
 import 'package:itdols/features/jobs/presentation/jobs_page.dart';
@@ -10,13 +11,14 @@ import 'package:itdols/features/places/presentation/places_page.dart';
 import 'package:itdols/features/routes/presentation/routes_page.dart';
 import 'package:itdols/features/routes/routes_controller.dart';
 
+// ignore: must_be_immutable
 class MainPage extends ConsumerWidget {
   MainPage({super.key});
 
   int _curentPage = 0;
 
   var pages = {
-    0: CalculationPage(),
+    0: const CalculationPage(),
     1: JobsPage(),
     2: PlacesPage(),
     3: RoutePage(),
@@ -35,7 +37,7 @@ class MainPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     _curentPage = ref.watch(screenStateHolder);
     var commands = {
-      0: () => ref.read(routesController).getRoutes(),
+      0: () => ref.read(calculationController).getPlaces(),
       1: () => ref.read(jobsController).getJobs(),
       2: () => ref.read(placesController).getPlaces(),
       3: () => ref.read(routesController).getRoutes(),
@@ -50,8 +52,8 @@ class MainPage extends ConsumerWidget {
               labelType: NavigationRailLabelType.all,
               selectedIndex: _curentPage,
               onDestinationSelected: (value) {
+                commands[value]!();
                 ref.read(screenStateHolder.notifier).setScreen(value);
-                commands[_curentPage]!();
               },
               destinations: List.generate(
                 icons.length,

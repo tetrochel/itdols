@@ -126,7 +126,7 @@ class JobWidgetState extends ConsumerState<JobWidget> {
                         backgroundColor: Colors.red,
                         foregroundColor: Colors.white,
                       ),
-                      onPressed: () => finishEditing(context), // TODO
+                      onPressed: () => finishEditing(context),
                       child: const Text(
                         'Удалить',
                       ),

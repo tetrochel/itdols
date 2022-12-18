@@ -13,9 +13,9 @@ class PlacesAPIMethods {
       },
     );
     if (response.statusCode == 200) {
-      var raw_places = await jsonDecode(response.body);
+      var rawPlaces = await jsonDecode(response.body);
       List<PlaceModel> places =
-          List<PlaceModel>.generate(raw_places.length, (index) => PlaceModel.fromMap(raw_places[index]));
+          List<PlaceModel>.generate(rawPlaces.length, (index) => PlaceModel.fromMap(rawPlaces[index]));
       return places;
     } else {
       return null;
