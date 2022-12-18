@@ -36,18 +36,20 @@ class PlacesPage extends ConsumerWidget {
         ),
         if (widgetState == WidgetState.loaded && places != null)
           Expanded(
-            child: ListView.separated(
-              physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-              itemCount: places!.length,
-              itemBuilder: (BuildContext context, int index) => PlaceWidget(place: places![index]),
-              separatorBuilder: (BuildContext context, int index) => const Divider(
-                color: Colors.grey,
-                height: 1,
-                thickness: 1,
-                indent: 10,
-                endIndent: 10,
-              ),
-            ),
+            child: places!.isEmpty
+                ? const Center(child: Text('Список пуст', style: TextStyle(fontSize: 24)))
+                : ListView.separated(
+                    physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                    itemCount: places!.length,
+                    itemBuilder: (BuildContext context, int index) => PlaceWidget(place: places![index]),
+                    separatorBuilder: (BuildContext context, int index) => const Divider(
+                      color: Colors.grey,
+                      height: 1,
+                      thickness: 1,
+                      indent: 10,
+                      endIndent: 10,
+                    ),
+                  ),
           )
         else if (widgetState == WidgetState.error)
           ErrorPage(onPressed: () => ref.read(placesController).getPlaces())

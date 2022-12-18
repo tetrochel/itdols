@@ -43,21 +43,23 @@ class JobsPage extends ConsumerWidget {
         ),
         if (widgetState == WidgetState.loaded && jobs != null && places != null)
           Expanded(
-            child: ListView.separated(
-              physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-              itemCount: jobs!.length,
-              itemBuilder: (BuildContext context, int index) => JobWidget(
-                job: jobs![index],
-                places: places!,
-              ),
-              separatorBuilder: (BuildContext context, int index) => const Divider(
-                color: Colors.grey,
-                height: 1,
-                thickness: 1,
-                indent: 10,
-                endIndent: 10,
-              ),
-            ),
+            child: jobs!.isEmpty
+                ? const Center(child: Text('Список пуст', style: TextStyle(fontSize: 24)))
+                : ListView.separated(
+                    physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                    itemCount: jobs!.length,
+                    itemBuilder: (BuildContext context, int index) => JobWidget(
+                      job: jobs![index],
+                      places: places!,
+                    ),
+                    separatorBuilder: (BuildContext context, int index) => const Divider(
+                      color: Colors.grey,
+                      height: 1,
+                      thickness: 1,
+                      indent: 10,
+                      endIndent: 10,
+                    ),
+                  ),
           )
         else if (widgetState == WidgetState.error)
           ErrorPage(onPressed: () {

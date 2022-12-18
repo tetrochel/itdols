@@ -29,18 +29,20 @@ class RoutePage extends ConsumerWidget {
         ),
         if (widgetState == WidgetState.loaded && routes != null)
           Expanded(
-            child: ListView.separated(
-              physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-              itemCount: routes!.length,
-              itemBuilder: (BuildContext context, int index) => RouteWidget(route: routes![index]),
-              separatorBuilder: (BuildContext context, int index) => const Divider(
-                color: Colors.grey,
-                height: 1,
-                thickness: 1,
-                indent: 10,
-                endIndent: 10,
-              ),
-            ),
+            child: routes!.isEmpty
+                ? const Center(child: Text('Список пуст', style: TextStyle(fontSize: 24)))
+                : ListView.separated(
+                    physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                    itemCount: routes!.length,
+                    itemBuilder: (BuildContext context, int index) => RouteWidget(route: routes![index]),
+                    separatorBuilder: (BuildContext context, int index) => const Divider(
+                      color: Colors.grey,
+                      height: 1,
+                      thickness: 1,
+                      indent: 10,
+                      endIndent: 10,
+                    ),
+                  ),
           )
         else if (widgetState == WidgetState.error)
           ErrorPage(onPressed: () => ref.read(routesController).getRoutes())

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:itdols/core/states/screen_state.dart';
 import 'package:itdols/core/widgets/main_page.dart';
 import 'package:itdols/core/widgets/messeger.dart';
 import 'package:itdols/features/auth/domain/data/local_user.dart';
@@ -121,16 +122,19 @@ class LoginPage extends ConsumerWidget {
   }
 
   void finishLogin(BuildContext context, WidgetRef ref, [bool mounted = true]) async {
-    if (usernameController.text.isEmpty) {
+    String username = usernameController.text.trim();
+    String password = passwordController.text.trim();
+    if (username.isEmpty) {
       showMessage('Введите логин!', context);
       return;
     }
-    if (passwordController.text.isEmpty) {
+    if (password.isEmpty) {
       showMessage('Введите пароль!', context);
       return;
     }
-    if (await ref.read(userController).loginUser(usernameController.text, passwordController.text)) {
+    if (await ref.read(userController).loginUser(username, password)) {
       if (!mounted) return;
+      ref.read(screenStateHolder.notifier).setScreen(0);
       Navigator.pushReplacementNamed(context, '/');
     } else {
       if (!mounted) return;

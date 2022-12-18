@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:itdols/core/states/screen_state.dart';
 import 'package:itdols/core/widgets/messeger.dart';
 import 'package:itdols/features/auth/user_controller.dart';
 
@@ -113,20 +114,24 @@ class RegistrationPage extends ConsumerWidget {
   }
 
   void finishRegistration(BuildContext context, WidgetRef ref, [bool mounted = true]) async {
-    if (usernameController.text.isEmpty) {
+    String username = usernameController.text.trim();
+    String password = passwordController.text.trim();
+    String repeatPassword = repeatPasswordController.text.trim();
+    if (username.isEmpty) {
       showMessage('Введите логин!', context);
       return;
     }
-    if (passwordController.text.isEmpty) {
+    if (password.isEmpty) {
       showMessage('Введите пароль!', context);
       return;
     }
-    if (passwordController.text != repeatPasswordController.text) {
+    if (password != repeatPassword) {
       showMessage('Пароли должны совпадать!', context);
       return;
     }
-    if (await ref.read(userController).registerUser(usernameController.text, passwordController.text)) {
+    if (await ref.read(userController).registerUser(username, password)) {
       if (!mounted) return;
+      ref.read(screenStateHolder.notifier).setScreen(0);
       Navigator.pushReplacementNamed(context, '/');
     } else {
       if (!mounted) return;
