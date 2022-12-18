@@ -22,10 +22,20 @@ class UserController {
     required this.userStateHolder,
   });
 
-  Future<bool> addUser(String username, String password) async {
+  Future<bool> registerUser(String username, String password) async {
     String? token = await AuthAPIMethods.registerUser(username, password);
     if (token != null) {
-      setUser(UserModel(username: username, token: token));
+      await setUser(UserModel(username: username, token: token));
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> loginUser(String username, String password) async {
+    String? token = await AuthAPIMethods.loginUser(username, password);
+    if (token != null) {
+      await setUser(UserModel(username: username, token: token));
       return true;
     } else {
       return false;

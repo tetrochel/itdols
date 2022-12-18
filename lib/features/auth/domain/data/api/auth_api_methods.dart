@@ -33,4 +33,36 @@ class AuthAPIMethods {
       return null;
     }
   }
+
+  static Future<String?> loginUser(String username, String password) async {
+    String? token;
+    http.Response response = await http.get(
+      Uri.parse('${API.mainURL}/salt'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'username': username,
+      },
+    );
+    String salt;
+    if (response.statusCode == 200) {
+      salt = jsonDecode(response.body)['salt'];
+    } else {
+      return null;
+    }
+    String hash = await API.getPasswordHash(password, salt);
+    response = await http.get(
+      Uri.parse('${API.mainURL}/token'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'username': username,
+        'password_hash': hash,
+      },
+    );
+    if (response.statusCode == 200) {
+      token = jsonDecode(response.body)['token'];
+      return token;
+    } else {
+      return null;
+    }
+  }
 }

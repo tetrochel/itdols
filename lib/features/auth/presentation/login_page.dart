@@ -59,7 +59,7 @@ class LoginPage extends ConsumerWidget {
                           autocorrect: false,
                           style: const TextStyle(fontSize: 20),
                           controller: passwordController,
-                          onFieldSubmitted: (value) => finishLogin(context),
+                          onFieldSubmitted: (value) => finishLogin(context, ref),
                           decoration: const InputDecoration(
                             labelText: 'Пароль',
                             border: OutlineInputBorder(),
@@ -72,7 +72,7 @@ class LoginPage extends ConsumerWidget {
                         height: 40,
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () => finishLogin(context),
+                          onPressed: () => finishLogin(context, ref),
                           child: const Text(
                             'Вход',
                             style: TextStyle(fontSize: 18),
@@ -120,7 +120,7 @@ class LoginPage extends ConsumerWidget {
     return true;
   }
 
-  void finishLogin(BuildContext context) {
+  void finishLogin(BuildContext context, WidgetRef ref, [bool mounted = true]) async {
     if (usernameController.text.isEmpty) {
       showMessage('Введите логин!', context);
       return;
@@ -129,6 +129,13 @@ class LoginPage extends ConsumerWidget {
       showMessage('Введите пароль!', context);
       return;
     }
-    // TODO: contacting the API
+    if (await ref.read(userController).loginUser(usernameController.text, passwordController.text)) {
+      if (!mounted) return;
+      Navigator.pushReplacementNamed(context, '/');
+    } else {
+      if (!mounted) return;
+      showMessage('Ошибка входа!', context);
+    }
+    return;
   }
 }

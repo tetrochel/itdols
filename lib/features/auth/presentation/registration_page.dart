@@ -125,7 +125,7 @@ class RegistrationPage extends ConsumerWidget {
       showMessage('Пароли должны совпадать!', context);
       return;
     }
-    if (await ref.read(userController).addUser(usernameController.text, passwordController.text)) {
+    if (await ref.read(userController).registerUser(usernameController.text, passwordController.text)) {
       if (!mounted) return;
       Navigator.pushReplacementNamed(context, '/');
     } else {
