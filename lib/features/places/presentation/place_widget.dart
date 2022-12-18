@@ -29,7 +29,7 @@ class PlaceWidgetState extends ConsumerState<PlaceWidget> {
         height: 42,
         child: Row(
           children: [
-            PlaceColorCircle(size: 18, id: widget.place.id),
+            PlaceColorCircle(size: 18, color: widget.place.color),
             SizedBox(
               width: isEditing ? 4 : 14,
             ),

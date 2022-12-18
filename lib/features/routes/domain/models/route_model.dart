@@ -4,13 +4,13 @@ import 'dart:convert';
 import 'package:itdols/features/places/domain/models/place_model.dart';
 
 class RouteModel {
-  final String routeID;
+  final int id;
   final PlaceModel firstPlace;
   final PlaceModel secondPlace;
   final int duration;
 
   RouteModel({
-    required this.routeID,
+    required this.id,
     required this.firstPlace,
     required this.secondPlace,
     required this.duration,
@@ -31,13 +31,13 @@ class RouteModel {
   }
 
   RouteModel copyWith({
-    String? routeID,
+    int? id,
     PlaceModel? firstPlace,
     PlaceModel? secondPlace,
     int? duration,
   }) {
     return RouteModel(
-      routeID: routeID ?? this.routeID,
+      id: id ?? this.id,
       firstPlace: firstPlace ?? this.firstPlace,
       secondPlace: secondPlace ?? this.secondPlace,
       duration: duration ?? this.duration,
@@ -46,7 +46,7 @@ class RouteModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'route_id': routeID,
+      'id': id,
       'first_place': firstPlace.toMap(),
       'second_place': secondPlace.toMap(),
       'duration': duration,
@@ -55,7 +55,7 @@ class RouteModel {
 
   factory RouteModel.fromMap(Map<String, dynamic> map) {
     return RouteModel(
-      routeID: map['route_id'] as String,
+      id: map['id'] as int,
       firstPlace: PlaceModel.fromMap(map['first_place'] as Map<String, dynamic>),
       secondPlace: PlaceModel.fromMap(map['second_place'] as Map<String, dynamic>),
       duration: map['duration'] as int,
@@ -68,14 +68,14 @@ class RouteModel {
 
   @override
   String toString() {
-    return 'RouteModel(routeID: $routeID, firstPlace: $firstPlace, secondPlace: $secondPlace, duration: $duration)';
+    return 'RouteModel(id: $id, firstPlace: $firstPlace, secondPlace: $secondPlace, duration: $duration)';
   }
 
   @override
   bool operator ==(covariant RouteModel other) {
     if (identical(this, other)) return true;
 
-    return other.routeID == routeID &&
+    return other.id == id &&
         other.firstPlace == firstPlace &&
         other.secondPlace == secondPlace &&
         other.duration == duration;
@@ -83,6 +83,6 @@ class RouteModel {
 
   @override
   int get hashCode {
-    return routeID.hashCode ^ firstPlace.hashCode ^ secondPlace.hashCode ^ duration.hashCode;
+    return id.hashCode ^ firstPlace.hashCode ^ secondPlace.hashCode ^ duration.hashCode;
   }
 }

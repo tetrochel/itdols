@@ -101,7 +101,13 @@ class LoginPage extends ConsumerWidget {
             ),
           );
         }
-        return const CircularProgressIndicator();
+        return const SafeArea(
+          child: Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
+        );
       },
     );
   }

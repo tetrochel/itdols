@@ -3,7 +3,7 @@ import 'package:itdols/features/places/domain/models/place_model.dart';
 
 class JobModel {
   final String name;
-  final String id;
+  final int id;
   final PlaceModel place;
   final int duration;
 
@@ -30,7 +30,7 @@ class JobModel {
 
   JobModel copyWith({
     String? name,
-    String? id,
+    int? id,
     PlaceModel? place,
     int? duration,
   }) {
@@ -45,7 +45,7 @@ class JobModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'name': name,
-      'job_id': id,
+      'id': id,
       'place': place.toMap(),
       'duration': duration,
     };
@@ -54,7 +54,7 @@ class JobModel {
   factory JobModel.fromMap(Map<String, dynamic> map) {
     return JobModel(
       map['name'] as String,
-      map['job_id'] as String,
+      map['id'] as int,
       PlaceModel.fromMap(map['place'] as Map<String, dynamic>),
       map['duration'] as int,
     );

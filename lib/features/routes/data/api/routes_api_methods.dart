@@ -26,7 +26,7 @@ class RoutesAPIMethods {
 
   static Future<bool> setRoute(String token, RouteModel route) async {
     http.Response response = await http.put(
-      Uri.parse('${API.mainURL}/routes/${route.routeID}'),
+      Uri.parse('${API.mainURL}/routes/${route.id}'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'token': token,

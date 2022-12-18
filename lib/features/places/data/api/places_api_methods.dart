@@ -21,4 +21,16 @@ class PlacesAPIMethods {
       return null;
     }
   }
+
+  static Future<bool> addPlace(String token, String name) async {
+    http.Response response = await http.post(
+      Uri.parse('${API.mainURL}/places'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'token': token,
+      },
+      body: json.encode({'name': name}),
+    );
+    return response.statusCode == 200;
+  }
 }

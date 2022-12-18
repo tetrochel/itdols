@@ -27,7 +27,7 @@ class PlacesPage extends ConsumerWidget {
           actions: [
             ElevatedButton(
               onPressed: () {
-                // TODO: go to place create screen
+                Navigator.pushNamed(context, '/add_place');
               },
               child: const Text('Добавить'),
             )

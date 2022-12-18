@@ -4,11 +4,11 @@ class PlaceColorCircle extends StatelessWidget {
   const PlaceColorCircle({
     Key? key,
     required this.size,
-    required this.id,
+    required this.color,
   }) : super(key: key);
 
   final double size;
-  final String id;
+  final String color;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,7 +16,7 @@ class PlaceColorCircle extends StatelessWidget {
       width: size,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey),
-        color: Color(0xAA000000 + int.parse(id.substring(2, 8), radix: 16)),
+        color: Color(0xAA000000 + int.parse(color, radix: 16)),
         shape: BoxShape.circle,
       ),
     );

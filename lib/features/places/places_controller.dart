@@ -50,4 +50,9 @@ class PlacesController {
   Future setPlace(PlaceModel place) async {
     print(place);
   }
+
+  Future<bool> addPlace(String name) async {
+    String token = userStateHolder.getUser()!.token;
+    return await PlacesAPIMethods.addPlace(token, name);
+  }
 }

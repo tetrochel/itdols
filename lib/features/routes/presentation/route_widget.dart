@@ -158,7 +158,7 @@ class _PlaceWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        PlaceColorCircle(size: 20, id: place.id),
+        PlaceColorCircle(size: 20, color: place.color),
         const SizedBox(
           width: 4,
         ),

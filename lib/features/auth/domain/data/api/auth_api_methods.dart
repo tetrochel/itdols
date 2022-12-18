@@ -14,7 +14,7 @@ class AuthAPIMethods {
   static Future<String?> registerUser(String username, String password) async {
     String? token;
     String salt = getRandomString(100);
-    String hash = API.getPasswordHash(password, salt);
+    String hash = await API.getPasswordHash(password, salt);
     http.Response response = await http.post(
       Uri.parse('${API.mainURL}/registration'),
       headers: <String, String>{
@@ -27,7 +27,7 @@ class AuthAPIMethods {
       }),
     );
     if (response.statusCode == 200) {
-      token = await jsonDecode(response.body)['token'];
+      token = jsonDecode(response.body)['token'];
       return token;
     } else {
       return null;

@@ -11,4 +11,8 @@ class UserStateHolder extends StateNotifier<UserModel?> {
   void setUser(UserModel? user) {
     state = user;
   }
+
+  UserModel? getUser() {
+    return state;
+  }
 }
