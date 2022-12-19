@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itdols/core/widgets/messeger.dart';
-import 'package:itdols/core/widgets/place_color_circle.dart';
 import 'package:itdols/features/jobs/domain/models/job_model.dart';
 import 'package:itdols/features/jobs/jobs_controller.dart';
+import 'package:itdols/features/jobs/presentation/place_widget.dart';
 import 'package:itdols/features/places/domain/models/place_model.dart';
 
 class JobWidget extends ConsumerStatefulWidget {
@@ -20,11 +20,11 @@ class JobWidgetState extends ConsumerState<JobWidget> {
   bool isEditing = false;
   final TextEditingController nameController = TextEditingController();
   final TextEditingController durationController = TextEditingController();
-  PlaceModel? newPlace;
+  PlaceModel? choosedPlace;
 
   @override
   Widget build(BuildContext context) {
-    newPlace ??= widget.job.place;
+    choosedPlace ??= widget.job.place;
     return Padding(
       padding: const EdgeInsets.all(8).copyWith(left: 5),
       child: Row(
@@ -62,15 +62,15 @@ class JobWidgetState extends ConsumerState<JobWidget> {
                           contentPadding: EdgeInsets.symmetric(horizontal: 5),
                           border: OutlineInputBorder(),
                         ),
-                        value: newPlace,
+                        value: choosedPlace,
                         items: widget.places.map<DropdownMenuItem<PlaceModel>>((e) {
                           return DropdownMenuItem<PlaceModel>(
                             value: e,
-                            child: _PlaceWidget(place: e),
+                            child: PlaceWidget(place: e),
                           );
                         }).toList(),
                         onChanged: (value) => setState(() {
-                          newPlace = value;
+                          choosedPlace = value;
                         }),
                       ),
                     )
@@ -79,7 +79,7 @@ class JobWidgetState extends ConsumerState<JobWidget> {
                         const SizedBox(
                           width: 5,
                         ),
-                        _PlaceWidget(place: widget.job.place),
+                        PlaceWidget(place: widget.job.place),
                       ],
                     ),
             ],
@@ -183,33 +183,8 @@ class JobWidgetState extends ConsumerState<JobWidget> {
     await ref.read(jobsController).setJob(widget.job.copyWith(
           name: nameController.text,
           duration: value,
-          place: newPlace,
+          place: choosedPlace,
         ));
     await ref.read(jobsController).getJobs();
-  }
-}
-
-class _PlaceWidget extends StatelessWidget {
-  const _PlaceWidget({
-    Key? key,
-    required this.place,
-  }) : super(key: key);
-
-  final PlaceModel place;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        PlaceColorCircle(size: 12, color: place.color),
-        const SizedBox(
-          width: 4,
-        ),
-        Text(
-          place.name,
-          style: const TextStyle(fontSize: 16),
-        ),
-      ],
-    );
   }
 }

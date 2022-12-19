@@ -73,4 +73,9 @@ class JobsController {
   Future setJob(JobModel job) async {
     print(job);
   }
+
+  // TODO: contacting the API
+  Future addJob(JobModel job) async {
+    print(job);
+  }
 }

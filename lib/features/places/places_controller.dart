@@ -48,11 +48,17 @@ class PlacesController {
 
   // TODO: contacting the API
   Future setPlace(PlaceModel place) async {
-    print(place);
+    String token = userStateHolder.getUser()!.token;
+    return await PlacesAPIMethods.setPlace(token, place);
   }
 
   Future<bool> addPlace(String name) async {
     String token = userStateHolder.getUser()!.token;
     return await PlacesAPIMethods.addPlace(token, name);
+  }
+
+  Future<bool> deletePlace(PlaceModel place) async {
+    String token = userStateHolder.getUser()!.token;
+    return await PlacesAPIMethods.deletePlace(token, place);
   }
 }

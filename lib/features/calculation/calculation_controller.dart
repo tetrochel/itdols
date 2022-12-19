@@ -33,7 +33,6 @@ class CalculationController {
     required this.userStateHolder,
   });
 
-  // TODO: contacting the API
   Future getPlaces() async {
     widgetStateHolder.setWidgetState(WidgetState.loading);
     List<PlaceModel>? places = [];

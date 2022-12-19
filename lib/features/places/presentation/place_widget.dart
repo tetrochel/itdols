@@ -71,7 +71,7 @@ class PlaceWidgetState extends ConsumerState<PlaceWidget> {
                           backgroundColor: Colors.red,
                           foregroundColor: Colors.white,
                         ),
-                        onPressed: () => finishEditing(context), // TODO
+                        onPressed: () => deletePlace(context),
                         child: const Text(
                           'Удалить',
                         ),
@@ -107,6 +107,15 @@ class PlaceWidgetState extends ConsumerState<PlaceWidget> {
     });
     focusNode.requestFocus();
     controller.text = widget.place.name;
+  }
+
+  void deletePlace(BuildContext context) async {
+    setState(() {
+      isEditing = false;
+    });
+    focusNode.unfocus();
+    await ref.read(placesController).deletePlace(widget.place);
+    await ref.read(placesController).getPlaces();
   }
 
   void finishEditing(BuildContext context) async {

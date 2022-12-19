@@ -33,4 +33,27 @@ class PlacesAPIMethods {
     );
     return response.statusCode == 200;
   }
+
+  static Future<bool> deletePlace(String token, PlaceModel place) async {
+    http.Response response = await http.delete(
+      Uri.parse('${API.mainURL}/places/${place.id}'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'token': token,
+      },
+    );
+    return response.statusCode == 200;
+  }
+
+  static Future<bool> setPlace(String token, PlaceModel place) async {
+    http.Response response = await http.put(
+      Uri.parse('${API.mainURL}/places/${place.id}'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'token': token,
+      },
+      body: json.encode({'name': place.name}),
+    );
+    return response.statusCode == 200;
+  }
 }

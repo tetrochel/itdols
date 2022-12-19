@@ -35,7 +35,7 @@ class JobsPage extends ConsumerWidget {
           actions: [
             ElevatedButton(
               onPressed: () {
-                // TODO: go to job create screen
+                Navigator.pushNamed(context, '/add_job');
               },
               child: const Text('Добавить'),
             )

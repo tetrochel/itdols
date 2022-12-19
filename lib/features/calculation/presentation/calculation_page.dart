@@ -26,8 +26,13 @@ class _CalculationPageState extends ConsumerState<CalculationPage> {
     if (places == null) {
       ref.read(calculationController).getPlaces();
     } else {
-      start = places!.first;
-      finish = places!.last;
+      if (places!.isNotEmpty) {
+        start = places!.first;
+        finish = places!.last;
+      } else {
+        start = null;
+        finish = null;
+      }
     }
     widgetState = ref.watch(widgetStateHolder);
     return Column(
@@ -64,7 +69,7 @@ class _CalculationPageState extends ConsumerState<CalculationPage> {
                   width: 200,
                   height: 45,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: places!.isEmpty ? null : () {},
                     child: const Text('Рассчитать'),
                   ),
                 ),
