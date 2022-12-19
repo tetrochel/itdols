@@ -26,6 +26,7 @@ class AddPlacePage extends ConsumerWidget {
                   width: double.infinity,
                   height: 50,
                   child: TextFormField(
+                    autofocus: true,
                     style: const TextStyle(fontSize: 20),
                     controller: controller,
                     onFieldSubmitted: (value) => addPlace(context, ref),

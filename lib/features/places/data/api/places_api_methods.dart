@@ -52,7 +52,7 @@ class PlacesAPIMethods {
         'Content-Type': 'application/json; charset=UTF-8',
         'token': token,
       },
-      body: json.encode({'name': place.name}),
+      body: place.toJson(),
     );
     return response.statusCode == 200;
   }

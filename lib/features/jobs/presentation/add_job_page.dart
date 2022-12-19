@@ -122,13 +122,22 @@ class _AddJobPageState extends ConsumerState<AddJobPage> {
 
   Future addJob(BuildContext context, WidgetRef ref, [bool mounted = true]) async {
     String name = nameController.text.trim();
+    final int? duration = int.tryParse(durationController.text);
     if (name.isEmpty) {
       showMessage('Введите название места!', context);
       return;
     }
-    // if (!await ref.read(jobsController).addJob(name)) {
-    //   showMessage('Ошибка сети!', context);
-    // }
+    if (duration == null) {
+      showMessage('Введите целое число!', context);
+      return;
+    }
+    if (duration <= 0) {
+      showMessage('Введите положительное число!', context);
+      return;
+    }
+    if (!await ref.read(jobsController).addJob(name, duration, choosedPlace!)) {
+      showMessage('Ошибка сети!', context);
+    }
     await ref.read(jobsController).getJobs();
     if (!mounted) return;
     Navigator.pop(context);

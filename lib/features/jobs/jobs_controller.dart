@@ -69,13 +69,13 @@ class JobsController {
     return places != null;
   }
 
-  // TODO: contacting the API
-  Future setJob(JobModel job) async {
-    print(job);
+  Future<bool> addJob(String name, int duration, PlaceModel place) async {
+    String token = userStateHolder.getUser()!.token;
+    return await JobesAPIMethods.addJob(token, name, duration, place);
   }
 
   // TODO: contacting the API
-  Future addJob(JobModel job) async {
+  Future setJob(JobModel job) async {
     print(job);
   }
 }

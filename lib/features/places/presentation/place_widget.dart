@@ -123,11 +123,14 @@ class PlaceWidgetState extends ConsumerState<PlaceWidget> {
       showMessage('Введите непустое название!', context);
       return;
     }
-    setState(() {
-      isEditing = false;
-    });
     focusNode.unfocus();
-    await ref.read(placesController).setPlace(widget.place.copyWith(name: controller.text));
-    await ref.read(placesController).getPlaces();
+    if (await ref.read(placesController).setPlace(widget.place.copyWith(name: controller.text))) {
+      await ref.read(placesController).getPlaces();
+      setState(() {
+        isEditing = false;
+      });
+    } else {
+      showMessage('Ошибка сети!', context);
+    }
   }
 }
