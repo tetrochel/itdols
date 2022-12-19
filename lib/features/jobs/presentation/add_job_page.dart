@@ -137,11 +137,14 @@ class _AddJobPageState extends ConsumerState<AddJobPage> {
       showMessage('Выберите место!', context);
       return;
     }
-    if (!await ref.read(jobsController).addJob(name, duration, choosedPlace!)) {
+    if (await ref.read(jobsController).addJob(name, duration, choosedPlace!)) {
+      await ref.read(jobsController).getJobs();
+      if (!mounted) return;
+      Navigator.pop(context);
+    }
+    {
+      if (!mounted) return;
       showMessage('Ошибка сети!', context);
     }
-    await ref.read(jobsController).getJobs();
-    if (!mounted) return;
-    Navigator.pop(context);
   }
 }

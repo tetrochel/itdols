@@ -115,7 +115,7 @@ class JobWidgetState extends ConsumerState<JobWidget> {
                         backgroundColor: Colors.green,
                         foregroundColor: Colors.white,
                       ),
-                      onPressed: () => finishEditing(context),
+                      onPressed: () => editJob(context),
                       child: const Text(
                         'Сохранить',
                       ),
@@ -126,7 +126,7 @@ class JobWidgetState extends ConsumerState<JobWidget> {
                         backgroundColor: Colors.red,
                         foregroundColor: Colors.white,
                       ),
-                      onPressed: () => finishEditing(context),
+                      onPressed: () => editJob(context),
                       child: const Text(
                         'Удалить',
                       ),
@@ -163,7 +163,7 @@ class JobWidgetState extends ConsumerState<JobWidget> {
     durationController.text = widget.job.duration.toString();
   }
 
-  void finishEditing(BuildContext context) async {
+  void editJob(BuildContext context) async {
     if (nameController.text.isEmpty) {
       showMessage('Введите непустое название дела!', context);
       return;
@@ -177,14 +177,17 @@ class JobWidgetState extends ConsumerState<JobWidget> {
       showMessage('Введите положительное число!', context);
       return;
     }
-    setState(() {
-      isEditing = false;
-    });
-    await ref.read(jobsController).setJob(widget.job.copyWith(
+    if (await ref.read(jobsController).setJob(widget.job.copyWith(
           name: nameController.text,
           duration: value,
           place: choosedPlace,
-        ));
-    await ref.read(jobsController).getJobs();
+        ))) {
+      setState(() {
+        isEditing = false;
+      });
+      await ref.read(jobsController).getJobs();
+    } else {
+      showMessage('Ошибка сети!', context);
+    }
   }
 }

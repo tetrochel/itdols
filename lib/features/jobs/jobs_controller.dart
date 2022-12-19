@@ -74,8 +74,8 @@ class JobsController {
     return await JobesAPIMethods.addJob(token, name, duration, place);
   }
 
-  // TODO: contacting the API
-  Future setJob(JobModel job) async {
-    print(job);
+  Future<bool> setJob(JobModel job) async {
+    String token = userStateHolder.getUser()!.token;
+    return await JobesAPIMethods.setJob(token, job);
   }
 }
