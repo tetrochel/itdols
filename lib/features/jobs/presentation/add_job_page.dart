@@ -23,8 +23,6 @@ class _AddJobPageState extends ConsumerState<AddJobPage> {
     places = ref.read(placesStateHolder);
     if (places!.isEmpty) {
       choosedPlace = null;
-    } else {
-      choosedPlace = places!.first;
     }
     return SafeArea(
       child: Scaffold(
@@ -124,7 +122,7 @@ class _AddJobPageState extends ConsumerState<AddJobPage> {
     String name = nameController.text.trim();
     final int? duration = int.tryParse(durationController.text);
     if (name.isEmpty) {
-      showMessage('Введите название места!', context);
+      showMessage('Введите название дела!', context);
       return;
     }
     if (duration == null) {
@@ -133,6 +131,10 @@ class _AddJobPageState extends ConsumerState<AddJobPage> {
     }
     if (duration <= 0) {
       showMessage('Введите положительное число!', context);
+      return;
+    }
+    if (choosedPlace == null) {
+      showMessage('Выберите место!', context);
       return;
     }
     if (!await ref.read(jobsController).addJob(name, duration, choosedPlace!)) {
