@@ -49,4 +49,16 @@ class JobesAPIMethods {
     );
     return response.statusCode == 200;
   }
+
+  static Future<bool> deleteJob(String token, JobModel job) async {
+    http.Response response = await http.delete(
+      Uri.parse('${API.mainURL}/jobs/${job.id}'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'token': token,
+      },
+      body: job.toJson(),
+    );
+    return response.statusCode == 200;
+  }
 }

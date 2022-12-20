@@ -126,7 +126,7 @@ class JobWidgetState extends ConsumerState<JobWidget> {
                         backgroundColor: Colors.red,
                         foregroundColor: Colors.white,
                       ),
-                      onPressed: () => editJob(context),
+                      onPressed: () => deleteJob(),
                       child: const Text(
                         'Удалить',
                       ),
@@ -182,6 +182,17 @@ class JobWidgetState extends ConsumerState<JobWidget> {
           duration: value,
           place: choosedPlace,
         ))) {
+      setState(() {
+        isEditing = false;
+      });
+      await ref.read(jobsController).getJobs();
+    } else {
+      showMessage('Ошибка сети!', context);
+    }
+  }
+
+  void deleteJob() async {
+    if (await ref.read(jobsController).deleteJob(widget.job)) {
       setState(() {
         isEditing = false;
       });

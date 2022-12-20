@@ -3,12 +3,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itdols/core/widgets/messeger.dart';
 import 'package:itdols/features/places/places_controller.dart';
 
-class AddPlacePage extends ConsumerWidget {
-  AddPlacePage({super.key});
-  final TextEditingController controller = TextEditingController();
+class AddPlacePage extends ConsumerStatefulWidget {
+  const AddPlacePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<AddPlacePage> createState() => _AddPlacePageState();
+}
+
+class _AddPlacePageState extends ConsumerState<AddPlacePage> {
+  final TextEditingController controller = TextEditingController();
+
+  bool isSending = false;
+
+  @override
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Center(
@@ -29,7 +37,7 @@ class AddPlacePage extends ConsumerWidget {
                     autofocus: true,
                     style: const TextStyle(fontSize: 20),
                     controller: controller,
-                    onFieldSubmitted: (value) => addPlace(context, ref),
+                    onFieldSubmitted: isSending ? null : (value) => addPlace(context, ref),
                     decoration: const InputDecoration(
                       labelText: 'Название локации',
                       border: OutlineInputBorder(),
@@ -42,7 +50,7 @@ class AddPlacePage extends ConsumerWidget {
                   height: 40,
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () => addPlace(context, ref),
+                    onPressed: isSending ? null : () => addPlace(context, ref),
                     child: const Text(
                       'Добавить',
                       style: TextStyle(fontSize: 18),
@@ -73,12 +81,18 @@ class AddPlacePage extends ConsumerWidget {
 
   Future addPlace(BuildContext context, WidgetRef ref, [bool mounted = true]) async {
     String name = controller.text.trim();
+    setState(() {
+      isSending = true;
+    });
     if (name.isEmpty) {
       showMessage('Введите название места!', context);
       return;
     }
     if (!await ref.read(placesController).addPlace(name)) {
       showMessage('Ошибка сети!', context);
+      setState(() {
+        isSending = false;
+      });
     }
     await ref.read(placesController).getPlaces();
     if (!mounted) return;

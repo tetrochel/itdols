@@ -125,10 +125,10 @@ class PlaceWidgetState extends ConsumerState<PlaceWidget> {
     }
     focusNode.unfocus();
     if (await ref.read(placesController).setPlace(widget.place.copyWith(name: controller.text))) {
-      await ref.read(placesController).getPlaces();
       setState(() {
         isEditing = false;
       });
+      await ref.read(placesController).getPlaces();
     } else {
       showMessage('Ошибка сети!', context);
     }

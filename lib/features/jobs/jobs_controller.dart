@@ -78,4 +78,9 @@ class JobsController {
     String token = userStateHolder.getUser()!.token;
     return await JobesAPIMethods.setJob(token, job);
   }
+
+  Future<bool> deleteJob(JobModel job) async {
+    String token = userStateHolder.getUser()!.token;
+    return await JobesAPIMethods.deleteJob(token, job);
+  }
 }

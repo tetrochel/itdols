@@ -141,8 +141,7 @@ class _AddJobPageState extends ConsumerState<AddJobPage> {
       await ref.read(jobsController).getJobs();
       if (!mounted) return;
       Navigator.pop(context);
-    }
-    {
+    } else {
       if (!mounted) return;
       showMessage('Ошибка сети!', context);
     }
