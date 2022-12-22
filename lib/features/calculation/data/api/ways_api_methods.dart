@@ -21,7 +21,6 @@ class WaysAPIMethods {
     if (response.statusCode == 200) {
       List<WayModel> ways = [];
       var rawWays = await jsonDecode(response.body);
-      print(rawWays);
       for (var rawWay in rawWays['ways']) {
         List<WayComponent> way = [];
         List<JobModel> xjobs =
