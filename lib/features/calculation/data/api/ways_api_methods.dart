@@ -21,6 +21,7 @@ class WaysAPIMethods {
     if (response.statusCode == 200) {
       List<WayModel> ways = [];
       var rawWays = await jsonDecode(response.body);
+      print(rawWays);
       for (var rawWay in rawWays['ways']) {
         List<WayComponent> way = [];
         List<JobModel> xjobs =
@@ -33,9 +34,8 @@ class WaysAPIMethods {
           way.addAll(jobs.where((element) => element.place == route.firstPlace));
           way.add(route);
         }
-        if (routes.isNotEmpty) {
-          way.addAll(jobs.where((element) => element.place == routes.last.firstPlace));
-        }
+
+        way.addAll(jobs.where((element) => element.place == routes.last.secondPlace));
         ways.add(WayModel(finalRoute: way, xjobs: xjobs));
       }
       return ways;
