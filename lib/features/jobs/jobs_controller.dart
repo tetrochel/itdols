@@ -42,7 +42,7 @@ class JobsController {
   Future getJobs() async {
     widgetStateHolder.setWidgetState(WidgetState.loading);
     List<JobModel>? jobs = [];
-    jobs = await JobesAPIMethods.getJobs(userStateHolder.getUser()!.token);
+    jobs = await JobsAPIMethods.getJobs(userStateHolder.getUser()!.token);
     bool isOK = await getPlaces();
     if (isOK) {
       if (jobs == null) {
@@ -71,16 +71,16 @@ class JobsController {
 
   Future<bool> addJob(String name, int duration, PlaceModel place) async {
     String token = userStateHolder.getUser()!.token;
-    return await JobesAPIMethods.addJob(token, name, duration, place);
+    return await JobsAPIMethods.addJob(token, name, duration, place);
   }
 
   Future<bool> setJob(JobModel job) async {
     String token = userStateHolder.getUser()!.token;
-    return await JobesAPIMethods.setJob(token, job);
+    return await JobsAPIMethods.setJob(token, job);
   }
 
   Future<bool> deleteJob(JobModel job) async {
     String token = userStateHolder.getUser()!.token;
-    return await JobesAPIMethods.deleteJob(token, job);
+    return await JobsAPIMethods.deleteJob(token, job);
   }
 }

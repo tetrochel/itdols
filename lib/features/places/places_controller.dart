@@ -46,7 +46,6 @@ class PlacesController {
     }
   }
 
-  // TODO: contacting the API
   Future setPlace(PlaceModel place) async {
     String token = userStateHolder.getUser()!.token;
     return await PlacesAPIMethods.setPlace(token, place);

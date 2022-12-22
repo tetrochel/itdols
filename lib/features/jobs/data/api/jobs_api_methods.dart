@@ -4,7 +4,7 @@ import 'package:itdols/core/data/api/api.dart';
 import 'package:itdols/features/jobs/domain/models/job_model.dart';
 import 'package:itdols/features/places/domain/models/place_model.dart';
 
-class JobesAPIMethods {
+class JobsAPIMethods {
   static Future<List<JobModel>?> getJobs(String token) async {
     http.Response response = await http.get(
       Uri.parse('${API.mainURL}/jobs'),

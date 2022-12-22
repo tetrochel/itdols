@@ -1,13 +1,19 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
-
+import 'package:flutter/material.dart';
+import 'package:itdols/features/calculation/domain/way_component.dart';
 import 'package:itdols/features/places/domain/models/place_model.dart';
+import 'package:itdols/features/routes/presentation/simple_route_widget.dart';
 
-class RouteModel {
+class RouteModel extends WayComponent {
   final int id;
   final PlaceModel firstPlace;
   final PlaceModel secondPlace;
   final int duration;
+
+  @override
+  Widget toWidget() {
+    return SimpleRouteWidget(route: this);
+  }
 
   RouteModel({
     required this.id,

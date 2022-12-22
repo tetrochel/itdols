@@ -9,6 +9,6 @@ Map<String, Widget Function(BuildContext)> routes = {
   '/': (context) => MainPage(),
   '/login': (context) => LoginPage(),
   '/registration': (context) => RegistrationPage(),
-  '/add_place': (context) => AddPlacePage(),
+  '/add_place': (context) => const AddPlacePage(),
   '/add_job': (context) => const AddJobPage(),
 };

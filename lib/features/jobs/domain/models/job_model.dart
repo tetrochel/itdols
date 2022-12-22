@@ -1,11 +1,19 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:itdols/features/calculation/domain/way_component.dart';
+import 'package:itdols/features/jobs/presentation/simple_job_widget.dart';
 import 'package:itdols/features/places/domain/models/place_model.dart';
 
-class JobModel {
+class JobModel extends WayComponent {
   final String name;
   final int id;
   final PlaceModel place;
   final int duration;
+
+  @override
+  Widget toWidget() {
+    return SimpleJobWidget(job: this);
+  }
 
   String getTimeString() {
     String result = '';
