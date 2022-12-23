@@ -12,6 +12,7 @@ class WayWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Divider(
             height: 1,
