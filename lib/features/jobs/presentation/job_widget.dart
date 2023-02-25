@@ -29,60 +29,62 @@ class JobWidgetState extends ConsumerState<JobWidget> {
       padding: const EdgeInsets.all(8).copyWith(left: 5),
       child: Row(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 30,
-                width: 400,
-                child: isEditing
-                    ? TextFormField(
-                        controller: nameController,
-                        style: const TextStyle(fontSize: 20),
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          contentPadding: EdgeInsets.symmetric(horizontal: 5),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 30,
+                  width: 400,
+                  child: isEditing
+                      ? TextFormField(
+                          controller: nameController,
+                          style: const TextStyle(fontSize: 20),
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                          ),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                          child: Text(
+                            widget.job.name,
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                        ),
+                ),
+                const SizedBox(height: 4),
+                isEditing
+                    ? SizedBox(
+                        width: 300,
+                        height: 36,
+                        child: DropdownButtonFormField<PlaceModel>(
+                          decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                            border: OutlineInputBorder(),
+                          ),
+                          value: choosedPlace,
+                          items: widget.places.map<DropdownMenuItem<PlaceModel>>((e) {
+                            return DropdownMenuItem<PlaceModel>(
+                              value: e,
+                              child: PlaceWidget(place: e),
+                            );
+                          }).toList(),
+                          onChanged: (value) => setState(() {
+                            choosedPlace = value;
+                          }),
                         ),
                       )
-                    : Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                        child: Text(
-                          widget.job.name,
-                          style: const TextStyle(fontSize: 20),
-                        ),
+                    : Row(
+                        children: [
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          PlaceWidget(place: widget.job.place),
+                        ],
                       ),
-              ),
-              const SizedBox(height: 4),
-              isEditing
-                  ? SizedBox(
-                      width: 200,
-                      height: 36,
-                      child: DropdownButtonFormField<PlaceModel>(
-                        decoration: const InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(horizontal: 5),
-                          border: OutlineInputBorder(),
-                        ),
-                        value: choosedPlace,
-                        items: widget.places.map<DropdownMenuItem<PlaceModel>>((e) {
-                          return DropdownMenuItem<PlaceModel>(
-                            value: e,
-                            child: PlaceWidget(place: e),
-                          );
-                        }).toList(),
-                        onChanged: (value) => setState(() {
-                          choosedPlace = value;
-                        }),
-                      ),
-                    )
-                  : Row(
-                      children: [
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        PlaceWidget(place: widget.job.place),
-                      ],
-                    ),
-            ],
+              ],
+            ),
           ),
           const Spacer(),
           isEditing

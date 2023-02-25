@@ -5,6 +5,7 @@ import 'package:itdols/core/widgets/place_color_circle.dart';
 import 'package:itdols/features/places/domain/models/place_model.dart';
 import 'package:itdols/features/routes/domain/models/route_model.dart';
 import 'package:itdols/features/routes/routes_controller.dart';
+import 'dart:io' show Platform;
 
 class RouteWidget extends ConsumerStatefulWidget {
   const RouteWidget({super.key, required this.route});
@@ -18,7 +19,7 @@ class RouteWidget extends ConsumerStatefulWidget {
 class RouteWidgetState extends ConsumerState<RouteWidget> {
   bool isEditing = false;
   final FocusNode focusNode = FocusNode();
-  final TextEditingController controller = TextEditingController();
+  final TextEditingController controller  = TextEditingController();
   final Key _formKey = GlobalKey<FormState>();
 
   @override
@@ -86,17 +87,26 @@ class RouteWidgetState extends ConsumerState<RouteWidget> {
           isEditing
               ? Row(
                   children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        foregroundColor: Colors.white,
-                      ),
-                      onPressed: () => finishEditing(context),
-                      child: const Text(
-                        'Сохранить',
-                      ),
-                    ),
-                    const SizedBox(width: 4),
+                    Platform.isAndroid || Platform.isIOS
+                        ? IconButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.green,
+                              foregroundColor: Colors.white,
+                            ),
+                            onPressed: () => finishEditing(context),
+                            icon: const Icon(Icons.done),
+                          )
+                        : ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.green,
+                              foregroundColor: Colors.white,
+                            ),
+                            onPressed: () => finishEditing(context),
+                            child: const Text(
+                              'Сохранить',
+                            ),
+                          ),
+                    if (!(Platform.isAndroid || Platform.isIOS)) const SizedBox(width: 4),
                     IconButton(
                       onPressed: () => setState(() {
                         isEditing = false;
@@ -169,6 +179,8 @@ class _PlaceWidget extends StatelessWidget {
         ),
         Text(
           place.name,
+          softWrap: false,
+          overflow: TextOverflow.fade,
           style: const TextStyle(fontSize: 18),
         ),
       ],

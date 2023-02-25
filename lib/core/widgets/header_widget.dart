@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class HeaderWidget extends StatelessWidget {
-  const HeaderWidget({super.key, required this.label, this.actions = const []});
+  const HeaderWidget({super.key, required this.label, this.actionWidget});
 
   final String label;
-  final List<Widget> actions;
+  final Widget? actionWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +17,15 @@ class HeaderWidget extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           child: Row(
             children: [
-              Text(
-                label,
-                style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              Expanded(
+                child: Text(
+                  label,
+                  softWrap: false,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                ),
               ),
-              const Spacer(),
-              ...actions,
+              if (actionWidget != null) actionWidget!,
             ],
           ),
         ),

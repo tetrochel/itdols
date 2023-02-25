@@ -25,14 +25,12 @@ class PlacesPage extends ConsumerWidget {
       children: [
         HeaderWidget(
           label: 'Список локаций',
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/add_place');
-              },
-              child: const Text('Добавить'),
-            )
-          ],
+          actionWidget: ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/add_place');
+            },
+            child: const Text('Добавить'),
+          ),
         ),
         if (widgetState == WidgetState.loaded && places != null)
           Expanded(

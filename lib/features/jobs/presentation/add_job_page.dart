@@ -41,6 +41,7 @@ class _AddJobPageState extends ConsumerState<AddJobPage> {
                   width: double.infinity,
                   height: 50,
                   child: TextFormField(
+                    autofocus: true ,
                     style: const TextStyle(fontSize: 20),
                     controller: nameController,
                     decoration: const InputDecoration(

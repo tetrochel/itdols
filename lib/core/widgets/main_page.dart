@@ -10,6 +10,7 @@ import 'package:itdols/features/places/places_controller.dart';
 import 'package:itdols/features/places/presentation/places_page.dart';
 import 'package:itdols/features/routes/presentation/routes_page.dart';
 import 'package:itdols/features/routes/routes_controller.dart';
+import 'dart:io' show Platform;
 
 // ignore: must_be_immutable
 class MainPage extends ConsumerWidget {
@@ -17,13 +18,13 @@ class MainPage extends ConsumerWidget {
 
   int _curentPage = 0;
 
-  var pages = {
-    0: const CalculationPage(),
-    1: JobsPage(),
-    2: PlacesPage(),
-    3: RoutePage(),
-    4: const LogoutPage(),
-  };
+  List<Widget> pages = [
+    const CalculationPage(),
+    JobsPage(),
+    PlacesPage(),
+    RoutePage(),
+    const LogoutPage(),
+  ];
 
   var icons = {
     0: {'icon': Icons.timeline, 'selectedIcon': Icons.timeline, 'label': 'Расчёт'},
@@ -45,36 +46,56 @@ class MainPage extends ConsumerWidget {
     };
     return SafeArea(
       child: Scaffold(
-        body: Row(
-          children: [
-            NavigationRail(
-              backgroundColor: Colors.white,
-              labelType: NavigationRailLabelType.all,
-              selectedIndex: _curentPage,
-              onDestinationSelected: (value) {
-                commands[value]!();
-                ref.read(screenStateHolder.notifier).setScreen(value);
-              },
-              destinations: List.generate(
-                icons.length,
-                (index) => NavigationRailDestination(
-                  icon: Icon(icons[index]!['icon'] as IconData),
-                  selectedIcon: Icon(icons[index]!['selectedIcon'] as IconData),
-                  label: Text(icons[index]!['label'] as String),
+        bottomNavigationBar: Platform.isAndroid || Platform.isIOS
+            ? NavigationBar(
+                backgroundColor: Colors.white,
+                selectedIndex: _curentPage,
+                onDestinationSelected: (value) {
+                  commands[value]!();
+                  ref.read(screenStateHolder.notifier).setScreen(value);
+                },
+                destinations: List.generate(
+                  icons.length,
+                  (index) => NavigationDestination(
+                    icon: Icon(icons[index]!['icon'] as IconData),
+                    selectedIcon: Icon(icons[index]!['selectedIcon'] as IconData),
+                    label: icons[index]!['label'] as String,
+                  ),
                 ),
+              )
+            : null,
+        body: Platform.isAndroid || Platform.isIOS
+            ? pages[_curentPage]
+            : Row(
+                children: [
+                  NavigationRail(
+                    backgroundColor: Colors.white,
+                    labelType: NavigationRailLabelType.all,
+                    selectedIndex: _curentPage,
+                    onDestinationSelected: (value) {
+                      commands[value]!();
+                      ref.read(screenStateHolder.notifier).setScreen(value);
+                    },
+                    destinations: List.generate(
+                      icons.length,
+                      (index) => NavigationRailDestination(
+                        icon: Icon(icons[index]!['icon'] as IconData),
+                        selectedIcon: Icon(icons[index]!['selectedIcon'] as IconData),
+                        label: Text(icons[index]!['label'] as String),
+                      ),
+                    ),
+                  ),
+                  const VerticalDivider(
+                    width: 1,
+                    thickness: 1,
+                  ),
+                  Expanded(
+                    child: LayoutBuilder(
+                      builder: (p0, p1) => pages[_curentPage],
+                    ),
+                  ),
+                ],
               ),
-            ),
-            const VerticalDivider(
-              width: 1,
-              thickness: 1,
-            ),
-            Expanded(
-              child: LayoutBuilder(
-                builder: (p0, p1) => pages[_curentPage] as Widget,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

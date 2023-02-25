@@ -32,14 +32,12 @@ class JobsPage extends ConsumerWidget {
       children: [
         HeaderWidget(
           label: 'Список дел',
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/add_job');
-              },
-              child: const Text('Добавить'),
-            )
-          ],
+          actionWidget: ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/add_job');
+            },
+            child: const Text('Добавить'),
+          ),
         ),
         if (widgetState == WidgetState.loaded && jobs != null && places != null)
           Expanded(

@@ -12,17 +12,24 @@ class PlaceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        PlaceColorCircle(size: 12, color: place.color),
-        const SizedBox(
-          width: 4,
-        ),
-        Text(
-          place.name,
-          style: const TextStyle(fontSize: 16),
-        ),
-      ],
+    return SizedBox(
+      width: 250,
+      child: Row(
+        children: [
+          PlaceColorCircle(size: 12, color: place.color),
+          const SizedBox(
+            width: 4,
+          ),
+          Expanded(
+            child: Text(
+              place.name,
+              softWrap: false,
+              overflow: TextOverflow.fade,
+              style: const TextStyle(fontSize: 16),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

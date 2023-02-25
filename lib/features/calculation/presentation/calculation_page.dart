@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_init_to_null
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itdols/core/states/widget_state.dart';
@@ -10,6 +8,7 @@ import 'package:itdols/features/calculation/domain/models/way.dart';
 import 'package:itdols/features/calculation/domain/states/ways_state.dart';
 import 'package:itdols/features/calculation/presentation/way_widget.dart';
 import 'package:itdols/features/places/domain/models/place_model.dart';
+import 'dart:io' show Platform;
 
 class CalculationPage extends ConsumerStatefulWidget {
   const CalculationPage({super.key});
@@ -47,7 +46,7 @@ class _CalculationPageState extends ConsumerState<CalculationPage> {
     return Column(
       children: [
         const HeaderWidget(
-          label: 'Расчёт порядка выполнения дел',
+          label: 'Распорядок дня',
         ),
         if (widgetState == WidgetState.loaded)
           Expanded(
@@ -56,61 +55,116 @@ class _CalculationPageState extends ConsumerState<CalculationPage> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 300,
-                        child: DropdownButtonFormField<PlaceModel>(
-                          decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(horizontal: 5),
-                            border: OutlineInputBorder(),
-                          ),
-                          value: start,
-                          items: places!.map<DropdownMenuItem<PlaceModel>>((e) {
-                            return DropdownMenuItem<PlaceModel>(
-                              value: e,
-                              child: _PlaceWidget(place: e),
-                            );
-                          }).toList(),
-                          onChanged: (value) => setState(() {
-                            start = value;
-                          }),
+                  child: Platform.isAndroid || Platform.isIOS
+                      ? Column(
+                          children: [
+                            SizedBox(
+                              width: 300,
+                              child: DropdownButtonFormField<PlaceModel>(
+                                decoration: const InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                                  border: OutlineInputBorder(),
+                                ),
+                                value: start,
+                                items: places!.map<DropdownMenuItem<PlaceModel>>((e) {
+                                  return DropdownMenuItem<PlaceModel>(
+                                    value: e,
+                                    child: _PlaceWidget(place: e),
+                                  );
+                                }).toList(),
+                                onChanged: (value) => setState(() {
+                                  start = value;
+                                }),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 200,
+                              height: 45,
+                              child: ElevatedButton(
+                                onPressed: widgetState == WidgetState.loading
+                                    ? null
+                                    : () {
+                                        ref.read(calculationController).getWays(start!, finish!);
+                                      },
+                                child: const Text('Рассчитать'),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 300,
+                              child: DropdownButtonFormField<PlaceModel>(
+                                decoration: const InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                                  border: OutlineInputBorder(),
+                                ),
+                                value: finish,
+                                items: places!.map<DropdownMenuItem<PlaceModel>>((e) {
+                                  return DropdownMenuItem<PlaceModel>(
+                                    value: e,
+                                    child: _PlaceWidget(place: e),
+                                  );
+                                }).toList(),
+                                onChanged: (value) => setState(() {
+                                  finish = value;
+                                }),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: 300,
+                              child: DropdownButtonFormField<PlaceModel>(
+                                decoration: const InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                                  border: OutlineInputBorder(),
+                                ),
+                                value: start,
+                                items: places!.map<DropdownMenuItem<PlaceModel>>((e) {
+                                  return DropdownMenuItem<PlaceModel>(
+                                    value: e,
+                                    child: _PlaceWidget(place: e),
+                                  );
+                                }).toList(),
+                                onChanged: (value) => setState(() {
+                                  start = value;
+                                }),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 200,
+                              height: 45,
+                              child: ElevatedButton(
+                                onPressed: widgetState == WidgetState.loading
+                                    ? null
+                                    : () {
+                                        ref.read(calculationController).getWays(start!, finish!);
+                                      },
+                                child: const Text('Рассчитать'),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 300,
+                              child: DropdownButtonFormField<PlaceModel>(
+                                decoration: const InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                                  border: OutlineInputBorder(),
+                                ),
+                                value: finish,
+                                items: places!.map<DropdownMenuItem<PlaceModel>>((e) {
+                                  return DropdownMenuItem<PlaceModel>(
+                                    value: e,
+                                    child: _PlaceWidget(place: e),
+                                  );
+                                }).toList(),
+                                onChanged: (value) => setState(() {
+                                  finish = value;
+                                }),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      SizedBox(
-                        width: 200,
-                        height: 45,
-                        child: ElevatedButton(
-                          onPressed: widgetState == WidgetState.loading
-                              ? null
-                              : () {
-                                  ref.read(calculationController).getWays(start!, finish!);
-                                },
-                          child: const Text('Рассчитать'),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 300,
-                        child: DropdownButtonFormField<PlaceModel>(
-                          decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(horizontal: 5),
-                            border: OutlineInputBorder(),
-                          ),
-                          value: finish,
-                          items: places!.map<DropdownMenuItem<PlaceModel>>((e) {
-                            return DropdownMenuItem<PlaceModel>(
-                              value: e,
-                              child: _PlaceWidget(place: e),
-                            );
-                          }).toList(),
-                          onChanged: (value) => setState(() {
-                            finish = value;
-                          }),
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
                 if (ways != null)
                   if (ways!.isNotEmpty)
@@ -145,17 +199,24 @@ class _PlaceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        PlaceColorCircle(size: 12, color: place.color),
-        const SizedBox(
-          width: 4,
-        ),
-        Text(
-          place.name,
-          style: const TextStyle(fontSize: 16),
-        ),
-      ],
+    return SizedBox(
+      width: 250,
+      child: Row(
+        children: [
+          PlaceColorCircle(size: 12, color: place.color),
+          const SizedBox(
+            width: 4,
+          ),
+          Expanded(
+            child: Text(
+              place.name,
+              softWrap: false,
+              overflow: TextOverflow.fade,
+              style: const TextStyle(fontSize: 16),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
